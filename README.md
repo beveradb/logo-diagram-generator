@@ -4,9 +4,11 @@ This tool allows you to generate SVG diagrams that visually represent an ecosyst
 
 ## Example Output
 
-Below is an example of what the generated diagram looks like, generated with the example config: `python generate_diagram.py -c config.yml.example`
+Below is an example of what the generated diagram looks like, generated with from this example config: 
 
-![Example Diagram](examples/example_logos.svg)
+`python generate_diagram.py -c examples/full.example.yml -o examples -n full.example`
+
+![Example Diagram](examples/full.example_logos.svg)
 
 ## Quick Start
 

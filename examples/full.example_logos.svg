@@ -2,6 +2,12 @@
  --><!-- Pages: 1 --><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1147pt" height="1110pt" viewBox="0.00 0.00 1147.17 1109.90">
 <g id="full.example" class="graph" transform="scale(1 1) rotate(0) translate(36 1073.9)">
 <polygon fill="white" stroke="none" points="-36,36 -36,-1073.9 1111.17,-1073.9 1111.17,36 -36,36"/>
+<g id="cluster_observability" class="cluster">
+<title>cluster_observability</title>
+</g>
+<g id="cluster_networking" class="cluster">
+<title>cluster_networking</title>
+</g>
 <g id="cluster_cluster_management" class="cluster">
 <title>cluster_cluster_management</title>
 </g>
@@ -16,12 +22,6 @@
 </g>
 <g id="cluster_developer_enablement" class="cluster">
 <title>cluster_developer_enablement</title>
-</g>
-<g id="cluster_observability" class="cluster">
-<title>cluster_observability</title>
-</g>
-<g id="cluster_networking" class="cluster">
-<title>cluster_networking</title>
 </g>
 <!-- Kubernetes -->
 
