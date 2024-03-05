@@ -8,11 +8,7 @@ from xml.dom.minidom import parseString
 from svgpathtools import svg2paths, wsvg
 from svgpathtools.paths2svg import big_bounding_box
 import logging
-
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+import argparse
 
 
 def read_config(config_path):
@@ -215,13 +211,44 @@ def embed_logos_in_diagram(diagram_svg_path, output_svg_path, config, logos_dir)
     logging.info("Logos embedded into diagram")
 
 
-config = read_config("config.yml")
-generate_text_only_svg_diagram_from_config(config, diagram_name="text_diagram")
+def main():
+    parser = argparse.ArgumentParser(
+        description="Generate SVG diagrams with embedded logos."
+    )
+    parser.add_argument(
+        "-n", "--name", default="diagram", help="Base name for the output SVG files."
+    )
+    parser.add_argument(
+        "-c", "--config", default="config.yml", help="Path to the configuration file."
+    )
+    parser.add_argument(
+        "-l", "--logos_dir", default="logos", help="Directory where logos are stored."
+    )
 
-# Embed logos directly into the diagram SVG
-embed_logos_in_diagram(
-    diagram_svg_path="text_diagram.svg",
-    output_svg_path="logo_diagram.svg",
-    config=config,
-    logos_dir="logos",
-)
+    args = parser.parse_args()
+
+    logging.basicConfig(
+        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+
+    config = read_config(args.config)
+
+    text_diagram_basename = f"{args.name}_text"
+    text_diagram_svg_filename = f"{text_diagram_basename}.svg"
+    logos_diagram_svg_filename = f"{args.name}_logos.svg"
+
+    generate_text_only_svg_diagram_from_config(
+        config, diagram_name=text_diagram_basename
+    )
+
+    # Embed logos directly into the diagram SVG
+    embed_logos_in_diagram(
+        diagram_svg_path=text_diagram_svg_filename,
+        output_svg_path=logos_diagram_svg_filename,
+        config=config,
+        logos_dir=args.logos_dir,
+    )
+
+
+if __name__ == "__main__":
+    main()

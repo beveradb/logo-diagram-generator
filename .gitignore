@@ -1,8 +1,7 @@
 # Functional outputs
 logos/
 config.yml
-text_diagram.svg
-logo_diagram.svg
+*.svg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
