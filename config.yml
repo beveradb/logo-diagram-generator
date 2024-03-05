@@ -1,0 +1,66 @@
+centralTool:
+  label: Kubernetes
+  name: Kubernetes
+ecosystem:
+- category: Cluster Management
+  tools:
+  - label: Rancher
+    name: Rancher
+- category: Cloud Integration
+  tools:
+  - alias: amazon_aws
+    label: AWS
+    name: Amazon Web Services
+- category: Continuous Deployment
+  tools:
+  - alias: helmsh
+    label: Helm
+    name: Helm
+  - alias: goharborio
+    label: Harbor
+    name: Harbor
+  - alias: fluxcdio
+    label: Flux
+    name: Flux
+  - alias: argoprojio
+    label: Argo
+    name: Argo CD
+- category: Observability
+  tools:
+  - label: Grafana
+    name: Grafana
+  - label: Loki
+    name: Grafana Loki
+    svgURL: https://upload.vectorlogo.zone/logos/grafana_loki/images/f5015965-dee0-4d2d-a260-5f4731c0f656.svg
+  - label: Tempo
+    name: Grafana Tempo
+    svgURL: https://raw.githubusercontent.com/cncf/landscape/master/hosted_logos/grafana-tempo.svg
+  - alias: prometheusio
+    label: Prometheus
+    name: Prometheus
+    svgURL: prometheusio
+- category: Networking
+  tools:
+  - alias: istioio
+    label: Istio
+    name: Istio
+- category: Security & Compliance
+  tools:
+  - alias: vaultproject
+    label: Vault
+    name: HashiCorp Vault
+  - label: Kyverno
+    name: Kyverno
+    svgURL: https://raw.githubusercontent.com/cncf/landscape/master/hosted_logos/kyverno.svg
+- category: Backups
+  tools:
+  - label: Velero
+    name: Velero
+    svgURL: https://raw.githubusercontent.com/cncf/landscape/master/hosted_logos/project-velero.svg
+- category: Developer Enablement
+  tools:
+  - label: Gitlab
+    name: GitLab
+  - label: Backstage
+    name: Backstage
+    svgURL: https://raw.githubusercontent.com/cncf/artwork/master/projects/backstage/horizontal/color/backstage-horizontal-color.svg
