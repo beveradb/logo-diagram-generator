@@ -1,0 +1,42 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "logo-diagram-generator"
+version = "0.1.0"
+description = "Generate vector graphic (SVG) diagrams of a tech ecosystem, using logos from each tool organised into groups around a central logo"
+authors = ["Andrew Beveridge <andrew@beveridge.uk>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "logo_diagram_generator"}]
+homepage = "https://github.com/beveradb/logo-diagram-generator"
+repository = "https://github.com/beveradb/logo-diagram-generator"
+documentation = "https://github.com/beveradb/logo-diagram-generator/blob/main/README.md"
+keywords = ["devops", "diagram", "diagram-generator", "svg", "vector-graphics"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Multimedia :: Graphics",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+requests = ">=2"
+graphviz = ">=0.20"
+pyyaml = "*"
+
+[tool.poetry.scripts]
+logo-diagram-generator = 'logo_diagram_generator.cli:main'
+
+[tool.poetry.group.dev.dependencies]
+black = ">=23"
+
+[tool.black]
+line-length = 140

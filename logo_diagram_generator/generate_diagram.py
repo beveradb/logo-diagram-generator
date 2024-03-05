@@ -1,42 +1,11 @@
 import os
 import re
 import logging
-import string
 import shutil
-import yaml
 import xml.dom.minidom
 import graphviz
-import argparse
 
-
-visually_distinct_colors = [
-    "darkgreen",
-    "darkblue",
-    "maroon3",
-    "red",
-    "burlywood",
-    "lime",
-    "aqua",
-    "fuchsia",
-    "cornflower",
-    "yellow",
-]
-
-
-def read_config(config_path):
-    logging.debug(f"Reading configuration from {config_path}")
-    with open(config_path, "r") as file:
-        return yaml.safe_load(file)
-
-
-def slugify(text):
-    logging.debug(f"Generating filesystem and URL safe slug for input text: {text}")
-    allowed_chars = string.ascii_letters + string.digits + " _-."
-    slug = "".join(
-        char.lower() if char in allowed_chars else "" for char in text
-    ).replace(" ", "_")
-    logging.debug(f"Returning slug: {slug}")
-    return slug
+from logo_diagram_generator import utils
 
 
 def generate_text_only_svg_diagram_from_config(config, diagram_name, output_svg_path):
@@ -82,10 +51,8 @@ def generate_text_only_svg_diagram_from_config(config, diagram_name, output_svg_
     )
 
     for i, group in enumerate(config["ecosystem"]["groups"], start=0):
-        group_slug = slugify(group["category"])
-        group_color = group.get(
-            "color", visually_distinct_colors[i % len(visually_distinct_colors)]
-        )
+        group_slug = utils.slugify(group["category"])
+        group_color = group.get("color", utils.visually_distinct_colors[i % len(utils.visually_distinct_colors)])
         logging.debug(f"Processing group: {group['category']} with color {group_color}")
 
         group_label = group["category"]
@@ -160,14 +127,10 @@ def find_svg_element_by_id(element, id):
     return None
 
 
-def embed_logos_in_diagram(
-    diagram_name, diagram_svg_path, output_svg_path, config, logos_dir
-):
+def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, config, logos_dir):
     logging.info(f"Embedding logos into diagram from {diagram_svg_path}")
 
-    default_logo_scale = (
-        config["ecosystem"].get("style", {}).get("defaultLogoScale", 1.5)
-    )
+    default_logo_scale = config["ecosystem"].get("style", {}).get("defaultLogoScale", 1.5)
     with open(diagram_svg_path, "r") as file:
         diagram_svg = file.read()
 
@@ -188,15 +151,13 @@ def embed_logos_in_diagram(
         logo_position_adjust_x = tool_config.get("positionAdjustX", 0)
         logo_position_adjust_y = tool_config.get("positionAdjustY", 0)
 
-        tool_name_slug = slugify(tool_name)
+        tool_name_slug = utils.slugify(tool_name)
         logo_svg_path = os.path.join(logos_dir, f"{tool_name_slug}.svg")
 
         # Parse the diagram SVG content to find the node with the right ID for this tool label
         diagram_svg_dom = xml.dom.minidom.parseString(diagram_svg)
         tool_node = find_svg_element_by_id(diagram_svg_dom.documentElement, tool_label)
-        diagram_graph_node = find_svg_element_by_id(
-            diagram_svg_dom.documentElement, diagram_name
-        )
+        diagram_graph_node = find_svg_element_by_id(diagram_svg_dom.documentElement, diagram_name)
 
         if tool_node is not None:
             logging.debug(f"Found node in diagram for tool: {tool_label}")
@@ -212,29 +173,17 @@ def embed_logos_in_diagram(
 
             class_search_1 = re.search(r'class="st\d+"', logo_svg_content)
             if class_search_1:
-                logging.warning(
-                    f"Found class attribute {class_search_1.group()} in tool SVG: {tool_label}"
-                )
+                logging.warning(f"Found class attribute {class_search_1.group()} in tool SVG: {tool_label}")
 
-                logging.debug(
-                    f"Adding {tool_name_slug}- prefix to any usages of generic class name"
-                )
-                logo_svg_content = re.sub(
-                    r"(st\d+)", f"{tool_name_slug}-\\1", logo_svg_content
-                )
+                logging.debug(f"Adding {tool_name_slug}- prefix to any usages of generic class name")
+                logo_svg_content = re.sub(r"(st\d+)", f"{tool_name_slug}-\\1", logo_svg_content)
 
             class_search_2 = re.search(r'class="cls-\d+"', logo_svg_content)
             if class_search_2:
-                logging.warning(
-                    f"Found class attribute {class_search_2.group()} in tool SVG: {tool_label}"
-                )
+                logging.warning(f"Found class attribute {class_search_2.group()} in tool SVG: {tool_label}")
 
-                logging.debug(
-                    f"Adding {tool_name_slug}- prefix to any usages of generic class name"
-                )
-                logo_svg_content = re.sub(
-                    r"(cls-\d+)", f"{tool_name_slug}-\\1", logo_svg_content
-                )
+                logging.debug(f"Adding {tool_name_slug}- prefix to any usages of generic class name")
+                logo_svg_content = re.sub(r"(cls-\d+)", f"{tool_name_slug}-\\1", logo_svg_content)
 
             logo_svg_dom = xml.dom.minidom.parseString(logo_svg_content)
             logo_node = logo_svg_dom.documentElement
@@ -247,12 +196,8 @@ def embed_logos_in_diagram(
 
             transform_x = float(cx) - (logo_scaled_width / 2) + logo_position_adjust_x
             transform_y = float(cy) - (logo_scaled_height / 2) + logo_position_adjust_y
-            logging.debug(
-                f"Translating logo to the position ({transform_x}, {transform_y})"
-            )
-            transform_attr = (
-                f"translate({transform_x}, {transform_y}) scale({logo_scale})"
-            )
+            logging.debug(f"Translating logo to the position ({transform_x}, {transform_y})")
+            transform_attr = f"translate({transform_x}, {transform_y}) scale({logo_scale})"
             logo_node.setAttribute("transform", transform_attr)
 
             logo_node.setAttribute("width", str(logo_orig_width))
@@ -273,55 +218,25 @@ def embed_logos_in_diagram(
     logging.info("Logos embedded into diagram")
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Generate SVG diagrams with embedded logos."
-    )
-    parser.add_argument(
-        "-n", "--name", default="diagram", help="Base name for the output SVG files."
-    )
-    parser.add_argument(
-        "-c", "--config", default="config.yml", help="Path to the configuration file."
-    )
-    parser.add_argument(
-        "-l", "--logos_dir", default="logos", help="Directory where logos are stored."
-    )
-    parser.add_argument(
-        "-o",
-        "--output_dir",
-        default=os.getcwd(),
-        help="Directory for the output SVG diagram.",
-    )
+def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logos_dir):
+    logging.info(f"Reading configuration from file: {config_filepath}")
+    config = utils.read_config(config_filepath)
 
-    logging.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
-
-    args = parser.parse_args()
-
-    logging.info(f"Reading configuration from file: {args.config}")
-    config = read_config(args.config)
-
-    text_diagram_basename = slugify(args.name)
+    text_diagram_basename = utils.slugify(diagram_name)
     logging.info(f"Filesystem safe diagram name: {text_diagram_basename}")
 
-    logging.info(f"Output directory: {args.output_dir}")
+    logging.info(f"Logos directory: {logos_dir}")
+    logging.info(f"Output directory: {output_dir}")
 
-    text_diagram_svg_path = os.path.join(
-        args.output_dir, f"{text_diagram_basename}_text.svg"
-    )
+    text_diagram_svg_path = os.path.join(output_dir, f"{text_diagram_basename}_text.svg")
     logging.info(f"Text only diagram SVG output path: {text_diagram_svg_path}")
 
     # Determining the output path for the SVG diagram with logos
-    output_svg_path = os.path.join(
-        args.output_dir, f"{text_diagram_basename}_logos.svg"
-    )
+    output_svg_path = os.path.join(output_dir, f"{text_diagram_basename}_logos.svg")
     logging.info(f"Logos diagram SVG output path: {output_svg_path}")
 
     # Generating the text-only SVG diagram based on the configuration
-    generate_text_only_svg_diagram_from_config(
-        config, diagram_name=text_diagram_basename, output_svg_path=text_diagram_svg_path
-    )
+    generate_text_only_svg_diagram_from_config(config, diagram_name=text_diagram_basename, output_svg_path=text_diagram_svg_path)
     logging.info("Generated text-only SVG diagram from configuration.")
 
     # Embedding logos into the text-only SVG diagram
@@ -330,12 +245,9 @@ def main():
         diagram_svg_path=text_diagram_svg_path,
         output_svg_path=output_svg_path,
         config=config,
-        logos_dir=args.logos_dir,
-    )
-    logging.info(
-        f"Completed successfully! Logos embedded into the diagram SVG: {output_svg_path}"
+        logos_dir=logos_dir,
     )
 
-
-if __name__ == "__main__":
-    main()
+    logging.info(f"Final diagram with embedded logos generated")
+    
+    return output_svg_path
