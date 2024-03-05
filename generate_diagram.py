@@ -185,17 +185,49 @@ def embed_logos_in_diagram(diagram_svg_path, output_svg_path, config, logos_dir)
             cy = ellipse_node.getAttribute("cy")
             logging.debug(f"Found ellipse with cx: {cx} and cy: {cy}")
 
-            # Parse the logo SVG content to be inserted
             logging.debug(f"Parsing logo SVG content to add transform and embed")
             with open(logo_svg_path, "r") as file:
                 logo_svg_content = file.read()
 
+            class_search_1 = re.search(r'class="st\d+"', logo_svg_content)
+            if class_search_1:
+                logging.warning(
+                    f"Found class attribute {class_search_1.group()} in tool SVG: {tool_label}"
+                )
+
+                logging.debug(
+                    f"Adding {tool_name_slug}- prefix to any usages of generic class name"
+                )
+                logo_svg_content = re.sub(
+                    r"(st\d+)", f"{tool_name_slug}-\\1", logo_svg_content
+                )
+
+            class_search_2 = re.search(r'class="cls-\d+"', logo_svg_content)
+            if class_search_2:
+                logging.warning(
+                    f"Found class attribute {class_search_2.group()} in tool SVG: {tool_label}"
+                )
+
+                logging.debug(
+                    f"Adding {tool_name_slug}- prefix to any usages of generic class name"
+                )
+                logo_svg_content = re.sub(
+                    r"(cls-\d+)", f"{tool_name_slug}-\\1", logo_svg_content
+                )
+
             logo_svg_dom = xml.dom.minidom.parseString(logo_svg_content)
             logo_node = logo_svg_dom.documentElement
 
-            # Translate the logo node to the position (cx, cy)
-            transform_attr = f"translate({cx}, {cy})"
+            transform_x = float(cx) - 60
+            transform_y = float(cy) - 30
+            logging.debug(
+                f"Translating logo to the position ({transform_x}, {transform_y})"
+            )
+            transform_attr = f"translate({transform_x}, {transform_y})"
             logo_node.setAttribute("transform", transform_attr)
+
+            logo_node.setAttribute("width", "120")
+            logo_node.setAttribute("height", "60")
 
             # Replace the tool node with the logo node
             tool_node.parentNode.replaceChild(logo_node, tool_node)
