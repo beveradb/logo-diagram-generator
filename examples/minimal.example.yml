@@ -1,0 +1,19 @@
+ecosystem:
+  style:
+    groupLabelFontname: Avenir Next, Helvetica
+    groupLabelFontsize: 10
+    groupLabelMargin: 0.1
+    defaultLogoScale: 1
+    diagramOverlapScaling: 1.3
+    diagramOverlapShrink: False
+  centralTool:
+    name: Kubernetes
+    margin: 0.2
+  groups:
+    - category: Cloud Integration
+      tools:
+        - name: Amazon Web Services
+          alias: amazon_aws
+    - category: Cluster Management
+      tools:
+        - name: Rancher
