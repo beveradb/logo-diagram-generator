@@ -35,12 +35,14 @@ def update_config(config_path, tool_name, updates):
             yaml.safe_dump(config, file)
 
 
-# Function to sanitize tool names, labels, and aliases for URL
-def sanitize_for_url(text):
-    return "".join(
+def slugify(text):
+    logging.debug(f"Generating filesystem and URL safe slug for input text: {text}")
+    slug = "".join(
         char.lower() if char.isalnum() or char == " " or char == "_" else ""
         for char in text
     ).replace(" ", "_")
+    logging.debug(f"Returning slug: {slug}")
+    return slug
 
 
 def generate_vectorlogozone_urls(tool_config):
@@ -54,21 +56,21 @@ def generate_vectorlogozone_urls(tool_config):
 
     tool_name = tool_config.get("name", None)
     if tool_name is not None:
-        tool_name_slug = sanitize_for_url(tool_name)
+        tool_name_slug = slugify(tool_name)
         urls_to_try.append(
             f"https://www.vectorlogo.zone/logos/{tool_name_slug}/{tool_name_slug}-ar21.svg"
         )
 
     tool_alias = tool_config.get("alias", None)
     if tool_alias is not None:
-        tool_alias_slug = sanitize_for_url(tool_alias)
+        tool_alias_slug = slugify(tool_alias)
         urls_to_try.append(
             f"https://www.vectorlogo.zone/logos/{tool_alias_slug}/{tool_alias_slug}-ar21.svg"
         )
 
     tool_label = tool_config.get("label", None)
     if tool_label is not None:
-        tool_label_slug = sanitize_for_url(tool_label)
+        tool_label_slug = slugify(tool_label)
         urls_to_try.append(
             f"https://www.vectorlogo.zone/logos/{tool_label_slug}/{tool_label_slug}-ar21.svg"
         )
@@ -125,7 +127,7 @@ def download_svg(tool_config, output_dir):
     """
 
     tool_name = tool_config.get("name")
-    tool_name_slug = sanitize_for_url(tool_name)
+    tool_name_slug = slugify(tool_name)
     output_path = os.path.join(output_dir, f"{tool_name_slug}.svg")
 
     # Check if the logo already exists

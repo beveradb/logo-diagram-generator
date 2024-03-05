@@ -1,7 +1,25 @@
 ecosystem:
+  style:
+    diagramEngine: neato
+    diagramOverlap: prism
+    diagramOverlapScaling: 4.5
+    diagramOverlapShrink: true
+    diagramPadding: 0.5
+    diagramRankdir: LR
+    groupLabelShape: box
+    groupLabelStyle: rounded
+    groupLabelFontname: Avenir Next, Helvetica
+    groupLabelFontcolor: "#333333"
+    groupLabelFontsize: 25
+    groupLabelMargin: 0.2
+    defaultLogoScale: 1.5
   centralTool:
     label: Kubernetes
     name: Kubernetes
+    svgURL: https://raw.githubusercontent.com/cncf/artwork/master/projects/kubernetes/stacked/color/kubernetes-stacked-color.svg
+    scale: 3
+    margin: 1
+    positionAdjustY: -20
   groups:
     - category: Cluster Management
       tools:

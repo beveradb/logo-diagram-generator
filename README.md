@@ -6,7 +6,7 @@ This tool allows you to generate SVG diagrams that visually represent an ecosyst
 
 Below is an example of what the generated diagram looks like, generated with the example config: `python generate_diagram.py -c config.yml.example`
 
-![Example Diagram](example/example_logos.svg)
+![Example Diagram](examples/example_logos.svg)
 
 ## Quick Start
 
@@ -34,13 +34,11 @@ Below is an example of what the generated diagram looks like, generated with the
    ```yaml
    ecosystem:
      centralTool:
-       label: Kubernetes
        name: Kubernetes
      groups:
        - category: Cluster Management
          tools:
-           - label: Rancher
-             name: Rancher
+           - name: Rancher
    ```
 
    If you know a particular tool has a different alias on VectorLogoZone (e.g. `helmsh` instead of just `helm`), set the `alias` value in the config.

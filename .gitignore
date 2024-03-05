@@ -1,6 +1,8 @@
+# Sensitive inputs
+config.yml
+
 # Functional outputs
 logos/
-config.yml
 /*.svg
 
 # Misc clutter
