@@ -57,12 +57,17 @@ def generate_diagram_from_config(config):
             )  # Replace the first space with a newline
 
         with dot.subgraph(name=f"cluster_{group_slug}") as c:
-            c.attr(color=group_color)
             c.attr(style="invis")
 
             # Create a label node at the top of the subgraph
             label_node_name = f"label_{group_slug}"
-            c.node(label_node_name, label=group_label, shape="box", fontsize="20")
+            c.node(
+                label_node_name,
+                label=group_label,
+                shape="box",
+                fontsize="20",
+                color=group_color,
+            )
 
             # Add an edge from the central tool to the label node
             dot.edge(central_tool, label_node_name, arrowsize="0.0")
@@ -70,8 +75,14 @@ def generate_diagram_from_config(config):
             for tool in group["tools"]:
                 tool_label = tool.get("label", tool["name"])
                 # Add each tool node within the subgraph
-                c.node(tool_label, label=tool_label, shape="ellipse", margin="0.3")
-                c.edge(label_node_name, tool_label)
+                c.node(
+                    tool_label,
+                    label=tool_label,
+                    shape="ellipse",
+                    margin="0.3",
+                    color=group_color,
+                )
+                c.edge(label_node_name, tool_label, color=group_color)
 
     # Render the graph to SVG
     dot.render("diagram", cleanup=True)
