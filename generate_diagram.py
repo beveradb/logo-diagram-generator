@@ -2,25 +2,38 @@ import yaml
 import graphviz
 import os
 import re
+import xml
 import xml.etree.ElementTree as ET
+from xml.dom.minidom import parseString
 from svgpathtools import svg2paths, wsvg
 from svgpathtools.paths2svg import big_bounding_box
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 def read_config(config_path):
+    logging.debug(f"Reading configuration from {config_path}")
     with open(config_path, "r") as file:
         return yaml.safe_load(file)
 
 
 # Function to sanitize tool names, labels, and aliases for URL
 def sanitize_for_url(text):
-    return "".join(
+    logging.debug(f"Sanitizing text for URL: {text}")
+    sanitized_text = "".join(
         char.lower() if char.isalnum() or char == " " or char == "_" else ""
         for char in text
     ).replace(" ", "_")
+    logging.debug(f"Sanitized text: {sanitized_text}")
+    return sanitized_text
 
 
-def generate_diagram_from_config(config):
+def generate_text_only_svg_diagram_from_config(config, diagram_name):
+    logging.info("Generating text-only SVG diagram from config")
     distinct_colors = [
         "darkgreen",
         "darkblue",
@@ -40,43 +53,45 @@ def generate_diagram_from_config(config):
     dot.attr(pad="1")
 
     central_tool = config["ecosystem"]["centralTool"]["name"]
+    logging.debug(f"Central tool: {central_tool}")
 
-    # Add the central tool node
-    dot.node(central_tool, label=central_tool, shape="ellipse", margin="0.5")
+    dot.node(
+        central_tool,
+        id=central_tool,
+        label=central_tool,
+        shape="ellipse",
+        margin="0.5",
+    )
 
-    # Create a subgraph for each group
     for i, group in enumerate(config["ecosystem"]["groups"], start=0):
         group_slug = sanitize_for_url(group["category"])
         group_color = distinct_colors[i % len(distinct_colors)]
+        logging.debug(f"Processing group: {group['category']} with color {group_color}")
 
-        # Wrap group names onto two lines if necessary
         group_label = group["category"]
-        if len(group_label) > 15:  # Arbitrary length for when to wrap text
-            group_label = group_label.replace(
-                " ", "\n", 1
-            )  # Replace the first space with a newline
+        if len(group_label) > 15:
+            group_label = group_label.replace(" ", "\n", 1)
 
         with dot.subgraph(name=f"cluster_{group_slug}") as c:
             c.attr(style="invis")
 
-            # Create a label node at the top of the subgraph
             label_node_name = f"label_{group_slug}"
             c.node(
                 label_node_name,
+                id=label_node_name,
                 label=group_label,
                 shape="box",
                 fontsize="20",
                 color=group_color,
             )
 
-            # Add an edge from the central tool to the label node
             dot.edge(central_tool, label_node_name, arrowsize="0.0")
 
             for tool in group["tools"]:
                 tool_label = tool.get("label", tool["name"])
-                # Add each tool node within the subgraph
                 c.node(
                     tool_label,
+                    id=tool_label,
                     label=tool_label,
                     shape="ellipse",
                     margin="0.3",
@@ -84,122 +99,129 @@ def generate_diagram_from_config(config):
                 )
                 c.edge(label_node_name, tool_label, color=group_color)
 
-    # Render the graph to SVG
-    dot.render("diagram", cleanup=True)
+    logging.info("Rendering the graph to SVG")
+    dot.render(diagram_name, cleanup=True)
 
 
 def scale_svg_to_width(svg_input_path, svg_output_path, target_width):
-    # Load the paths and attributes from the SVG
-    paths, attributes = svg2paths(svg_input_path)
+    logging.debug(f"Scaling SVG from {svg_input_path} to width {target_width}")
+    try:
+        paths, attributes = svg2paths(svg_input_path)
 
-    # Calculate the current bounding box of all paths
-    min_x, max_x, min_y, max_y = big_bounding_box(paths)
-    current_width = max_x - min_x
+        if not paths:
+            logging.warning(f"No paths found in SVG: {svg_input_path}.")
 
-    # Calculate the scale factor
-    scale_factor = target_width / current_width
+        logging.debug(f"Number of paths found: {len(paths)}")
 
-    # Scale all paths
-    scaled_paths = [path.scaled(scale_factor) for path in paths]
+        valid_paths = []  # List to hold paths with valid bounding boxes
+        for i, path in enumerate(paths):
+            logging.debug(f"Processing path {i + 1} of {len(paths)}")
+            try:
+                path.bbox()  # Attempt to calculate bounding box
+                valid_paths.append(path)  # Add to valid_paths if successful
+            except Exception as e:
+                logging.error(f"Error calculating bounding box for a path: {e}")
+                continue  # Skip paths that cause errors
 
-    # Write the scaled paths back to a new SVG file
-    wsvg(scaled_paths, attributes=attributes, filename=svg_output_path)
+        if not valid_paths:
+            logging.error("No valid bounding boxes found for any paths.")
+            return
 
+        min_x, max_x, min_y, max_y = big_bounding_box(
+            valid_paths
+        )  # Use valid_paths here
+        current_width = max_x - min_x
+        scale_factor = target_width / current_width
+        scaled_paths = [
+            path.scaled(scale_factor) for path in valid_paths
+        ]  # Scale valid paths
 
-def prepare_svg_for_embedding(svg_path):
-    with open(svg_path, "r") as file:
-        svg_content = file.read()
-    # Remove XML declaration and DOCTYPE
-    svg_content = re.sub(
-        r"<\?xml .*\?>|<!DOCTYPE .*>\n", "", svg_content, flags=re.MULTILINE
-    )
-    # Extract the attributes from the <svg> tag
-    svg_tag_match = re.search(r"<svg([^>]*)>", svg_content, flags=re.MULTILINE)
-    svg_attributes = svg_tag_match.group(1) if svg_tag_match else ""
-    # Remove outer <svg> tag, preserving the attributes and inner content
-    svg_content = re.sub(r"<svg[^>]*>(.*)</svg>", r"\1", svg_content, flags=re.DOTALL)
-    # Return the attributes along with the inner SVG content
-    return svg_attributes, svg_content.strip()
-
-
-def set_svg_dimensions_and_viewBox(svg_path, output_path, width, height, viewBox):
-    # Parse the SVG file
-    tree = ET.parse(svg_path)
-    root = tree.getroot()
-
-    # Set the width and height attributes
-    root.attrib["width"] = width
-    root.attrib["height"] = height
-
-    # Set the viewBox attribute
-    root.attrib["viewBox"] = viewBox
-
-    # Write the modified SVG to a new file
-    tree.write(output_path)
+        wsvg(scaled_paths, attributes=attributes, filename=svg_output_path)
+        logging.info(f"SVG scaled and saved to {svg_output_path}")
+    except Exception as e:
+        logging.error(f"Error scaling SVG: {e}")
+        raise
 
 
-def remove_transform_property(svg_path, output_path):
-    # Parse the SVG file
-    tree = ET.parse(svg_path)
-    root = tree.getroot()
+def find_element_by_id(element, id):
+    # Check if this element is the one we're looking for
+    if element.getAttribute("id") == id:
+        return element
 
-    # Find the <g> element with the specific id 'graph0'
-    # Note: The namespace (ns0) handling might vary depending on the SVG. Adjust as necessary.
-    # If your SVG uses namespaces, you might need to find the correct namespace URI and use it.
-    namespaces = {
-        "ns": "http://www.w3.org/2000/svg"
-    }  # Adjust the namespace URI as necessary
-    graph_element = root.find(".//ns:g[@id='graph0']", namespaces=namespaces)
-
-    if graph_element is not None:
-        # Check if the 'transform' attribute exists and delete it
-        if "transform" in graph_element.attrib:
-            del graph_element.attrib["transform"]
-
-    # Write the modified SVG to a new file
-    tree.write(output_path)
+    # Recursively search in child elements
+    for child in element.childNodes:
+        if child.nodeType == child.ELEMENT_NODE:
+            found = find_element_by_id(child, id)
+            if found:
+                return found
+    return None
 
 
-def embed_logos_in_diagram(diagram_svg_path, logos):
+def embed_logos_in_diagram(diagram_svg_path, output_svg_path, config, logos_dir):
+    logging.info(f"Embedding logos into diagram from {diagram_svg_path}")
     with open(diagram_svg_path, "r") as file:
         diagram_svg = file.read()
 
-    for label, logo_svg_filename in logos.items():
-        logo_svg_path = os.path.join(
-            os.path.join(os.getcwd(), "logos"), logo_svg_filename
-        )
-        scaled_logo_svg_path = os.path.join(
-            os.path.join(os.getcwd(), "resized_logos_svg"), logo_svg_filename
-        )
-        scale_svg_to_width(logo_svg_path, scaled_logo_svg_path, target_width=100.0)
+    tools = []
+    central_tool = config["ecosystem"].get("centralTool", {})
+    if central_tool.get("name"):
+        tools.append(central_tool)
 
-        svg_attributes, logo_svg_content = prepare_svg_for_embedding(logo_svg_path)
-        # Construct a regex pattern to find the <text> tag for the placeholder
-        pattern = re.compile(
-            r"(<text[^>]*>.*?" + re.escape(label) + r".*?</text>)", re.DOTALL
-        )
-        # Insert the SVG content with attributes after the <text> tag
-        replacement = r"\1<g " + svg_attributes + ">" + logo_svg_content + "</g>"
-        diagram_svg = re.sub(pattern, replacement, diagram_svg)
+    for group in config["ecosystem"].get("groups", []):
+        for tool in group.get("tools", []):
+            tools.append(tool)
 
-    with open(diagram_svg_path, "w") as file:
+    for tool_config in tools:
+        tool_name = tool_config.get("name")
+        tool_label = tool_config.get("label", tool_name)
+        tool_name_slug = sanitize_for_url(tool_name)
+        logo_svg_path = os.path.join(logos_dir, f"{tool_name_slug}.svg")
+
+        # Parse the diagram SVG content to find the node with the right ID for this tool label
+        diagram_svg_dom = xml.dom.minidom.parseString(diagram_svg)
+        tool_node = find_element_by_id(diagram_svg_dom.documentElement, tool_label)
+
+        if tool_node is not None:
+            logging.debug(f"Found node in diagram for tool: {tool_label}")
+
+            ellipse_node = tool_node.getElementsByTagName("ellipse")[0]
+            cx = ellipse_node.getAttribute("cx")
+            cy = ellipse_node.getAttribute("cy")
+            logging.debug(f"Found ellipse with cx: {cx} and cy: {cy}")
+
+            # Parse the logo SVG content to be inserted
+            logging.debug(f"Parsing logo SVG content to add transform and embed")
+            with open(logo_svg_path, "r") as file:
+                logo_svg_content = file.read()
+
+            logo_svg_dom = xml.dom.minidom.parseString(logo_svg_content)
+            logo_node = logo_svg_dom.documentElement
+
+            # Translate the logo node to the position (cx, cy)
+            transform_attr = f"translate({cx}, {cy})"
+            logo_node.setAttribute("transform", transform_attr)
+
+            # Replace the tool node with the logo node
+            tool_node.parentNode.replaceChild(logo_node, tool_node)
+
+            # Update the diagram SVG with the modified DOM
+            diagram_svg = diagram_svg_dom.toxml()
+        else:
+            logging.warning(f"No node found in diagram for tool: {tool_name}")
+
+    with open(output_svg_path, "w") as file:
         file.write(diagram_svg)
 
-    # Set the root SVG width, height, and viewBox after embedding logos
-    set_svg_dimensions_and_viewBox(
-        diagram_svg_path,
-        diagram_svg_path,
-        "1000pt",
-        "1000pt",
-        "-100.00 -800.00 1000 1000",
-    )
-
-    # Remove the transform property from the specified <g> tag
-    remove_transform_property(diagram_svg_path, diagram_svg_path)
+    logging.info("Logos embedded into diagram")
 
 
 config = read_config("config.yml")
-generate_diagram_from_config(config)
+generate_text_only_svg_diagram_from_config(config, diagram_name="text_diagram")
 
 # Embed logos directly into the diagram SVG
-# embed_logos_in_diagram("diagram.svg")
+embed_logos_in_diagram(
+    diagram_svg_path="text_diagram.svg",
+    output_svg_path="logo_diagram.svg",
+    config=config,
+    logos_dir="logos",
+)
