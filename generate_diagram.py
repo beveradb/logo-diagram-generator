@@ -35,14 +35,14 @@ def generate_diagram_from_config(config):
     ]
 
     dot = graphviz.Digraph(engine="neato", format="svg")
-    dot.attr(overlap="ipsep", mode="ipsep")
-    dot.attr(rankdir="TB")  # Encourage a top-to-bottom layout
-    dot.attr(ranksep="1.0")  # Increase distance between ranks
+    dot.attr(overlap="false")
+    dot.attr(rankdir="TB")
+    dot.attr(pad="1")
 
     central_tool = config["ecosystem"]["centralTool"]["name"]
 
     # Add the central tool node
-    dot.node(central_tool, label=central_tool, shape="ellipse")
+    dot.node(central_tool, label=central_tool, shape="ellipse", margin="0.5")
 
     # Create a subgraph for each group
     for i, group in enumerate(config["ecosystem"]["groups"], start=0):
@@ -59,19 +59,44 @@ def generate_diagram_from_config(config):
         with dot.subgraph(name=f"cluster_{group_slug}") as c:
             c.attr(color=group_color)
             c.attr(style="rounded")
+            c.attr(label=group_label)
+            c.attr(labeljust="l")
+            c.attr(margin="5")
 
-            # Add an anchor node for the group
-            group_anchor_name = f"anchor_{group_slug}"
-            c.node(group_anchor_name, shape="point", width="0.1")
+            if len(group["tools"]) > 1:
+                # Add an anchor node for the group
+                group_anchor_name = f"anchor_{group_slug}"
+                c.node(
+                    group_anchor_name,
+                    shape="point",
+                    width="0",
+                    margin="0",
+                    style="invis",
+                )
+            else:
+                group_anchor_name = group["tools"][0].get(
+                    "label", group["tools"][0]["name"]
+                )
 
             for tool in group["tools"]:
                 tool_label = tool.get("label", tool["name"])
                 # Add each tool node within the subgraph
-                c.node(tool_label, label=tool_label, shape="ellipse")
-                c.edge(group_anchor_name, tool_label)
+                c.node(tool_label, label=tool_label, shape="ellipse", margin="0.3")
+
+                if len(group["tools"]) > 1:
+                    c.edge(group_anchor_name, tool_label)
+
+            if len(group["tools"]) > 1:
+                central_to_anchor_arrowsize = "0.0"
+            else:
+                central_to_anchor_arrowsize = "1.0"
 
             # Add an edge from the central tool to the anchor node of the group
-            dot.edge(central_tool, group_anchor_name)
+            dot.edge(
+                central_tool,
+                group_anchor_name,
+                arrowsize=central_to_anchor_arrowsize,
+            )
 
     # Render the graph to SVG
     dot.render("diagram", cleanup=True)
