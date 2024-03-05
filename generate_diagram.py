@@ -58,45 +58,20 @@ def generate_diagram_from_config(config):
 
         with dot.subgraph(name=f"cluster_{group_slug}") as c:
             c.attr(color=group_color)
-            c.attr(style="rounded")
-            c.attr(label=group_label)
-            c.attr(labeljust="l")
-            c.attr(margin="5")
+            c.attr(style="invis")
 
-            if len(group["tools"]) > 1:
-                # Add an anchor node for the group
-                group_anchor_name = f"anchor_{group_slug}"
-                c.node(
-                    group_anchor_name,
-                    shape="point",
-                    width="0",
-                    margin="0",
-                    style="invis",
-                )
-            else:
-                group_anchor_name = group["tools"][0].get(
-                    "label", group["tools"][0]["name"]
-                )
+            # Create a label node at the top of the subgraph
+            label_node_name = f"label_{group_slug}"
+            c.node(label_node_name, label=group_label, shape="box", fontsize="20")
+
+            # Add an edge from the central tool to the label node
+            dot.edge(central_tool, label_node_name, arrowsize="0.0")
 
             for tool in group["tools"]:
                 tool_label = tool.get("label", tool["name"])
                 # Add each tool node within the subgraph
                 c.node(tool_label, label=tool_label, shape="ellipse", margin="0.3")
-
-                if len(group["tools"]) > 1:
-                    c.edge(group_anchor_name, tool_label)
-
-            if len(group["tools"]) > 1:
-                central_to_anchor_arrowsize = "0.0"
-            else:
-                central_to_anchor_arrowsize = "1.0"
-
-            # Add an edge from the central tool to the anchor node of the group
-            dot.edge(
-                central_tool,
-                group_anchor_name,
-                arrowsize=central_to_anchor_arrowsize,
-            )
+                c.edge(label_node_name, tool_label)
 
     # Render the graph to SVG
     dot.render("diagram", cleanup=True)
