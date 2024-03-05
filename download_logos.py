@@ -1,17 +1,9 @@
 import os
+import argparse
 import requests
 import yaml
 from urllib.parse import urlparse
 import logging
-
-
-def configure_logging():
-    """
-    Configures the logging system, setting the level and format for log messages.
-    """
-    logging.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
 
 
 def update_config(config_path, tool_name, updates):
@@ -176,20 +168,33 @@ def ensure_directory_exists(directory_path):
         os.makedirs(directory_path)
 
 
-def load_config(config_path="config.yml"):
-    """
-    Loads the YAML configuration from the given path.
-    :param config_path: Path to the YAML configuration file.
-    :return: The loaded configuration dictionary.
-    """
+def read_config(config_path):
+    logging.debug(f"Reading configuration from {config_path}")
     with open(config_path, "r") as file:
-        config = yaml.safe_load(file)
-    return config
+        return yaml.safe_load(file)
 
 
 def main():
-    ensure_directory_exists("logos")
-    config = load_config()
+    parser = argparse.ArgumentParser(
+        description="Download SVG logos for use with diagram generator."
+    )
+    parser.add_argument(
+        "-c", "--config", default="config.yml", help="Path to the configuration file."
+    )
+    parser.add_argument(
+        "-l", "--logos_dir", default="logos", help="Directory where logos are stored."
+    )
+
+    args = parser.parse_args()
+
+    logging.basicConfig(
+        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+
+    config = read_config(args.config)
+
+    ensure_directory_exists(args.logos_dir)
+
     ecosystem = config.get("ecosystem", {})
     tools = []
 
@@ -202,9 +207,8 @@ def main():
             tools.append(tool)
 
     for tool_config in tools:
-        download_svg(tool_config, output_dir="logos")
+        download_svg(tool_config, output_dir=args.logos_dir)
 
 
 if __name__ == "__main__":
-    configure_logging()
     main()

@@ -39,6 +39,9 @@ ecosystem:
         - alias: istioio
           label: Istio
           name: Istio
+        - alias: corednsio
+          label: CoreDNS
+          name: CoreDNS
     - category: Security & Compliance
       tools:
         - alias: vaultproject

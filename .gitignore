@@ -1,7 +1,7 @@
 # Functional outputs
 logos/
 config.yml
-*.svg
+/*.svg
 
 # Misc clutter
 .DS_Store
