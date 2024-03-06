@@ -57,6 +57,7 @@ ecosystem:
         - alias: istioio
           label: Istio
           name: Istio
+          positionAdjustX: 20
         - alias: corednsio
           label: CoreDNS
           name: CoreDNS

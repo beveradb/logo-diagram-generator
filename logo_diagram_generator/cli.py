@@ -7,12 +7,16 @@ from logo_diagram_generator import download_logos, generate_diagram, utils
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate SVG diagrams of a tech ecosystem, using logos from each tool organised into groups around a central logo."
+        description="Generate SVG diagrams of a tech ecosystem, using logos from each tool organised into groups around a central logo.",
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, max_help_position=80),
     )
+    parser.add_argument("-d", "--debug", action="store_true", help="enable debug logging, equivalent to --log_level=debug")
+    parser.add_argument("--log_level", default="info", help="log level, e.g. info, debug, warning (default: %(default)s)")
+    
     parser.add_argument("-n", "--name", default="diagram", help="Base name for the output SVG files.")
     parser.add_argument("-c", "--config", default="config.yml", help="Path to the configuration file.")
     parser.add_argument("-l", "--logos_dir", default="logos", help="Directory where logos are stored.")
-    parser.add_argument("-d", "--skip_download", default=False, help="Skip downloading logos before generating.")
+    parser.add_argument("-s", "--skip_download", default=False, help="Skip downloading logos before generating.")
     parser.add_argument(
         "-o",
         "--output_dir",
@@ -20,9 +24,14 @@ def main():
         help="Directory for the output SVG diagram.",
     )
 
-    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
-
     args = parser.parse_args()
+
+    if args.debug:
+        log_level = logging.DEBUG
+    else:
+        log_level = getattr(logging, args.log_level.upper())
+
+    logging.basicConfig(format="%(asctime)s.%(msecs)03d - %(levelname)s - %(module)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=log_level)
 
     logging.info(f"Checking logos directory exists: {args.logos_dir}")
     utils.ensure_directory_exists(args.logos_dir)
