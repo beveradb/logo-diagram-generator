@@ -185,6 +185,22 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
                 logging.debug(f"Adding {tool_name_slug}- prefix to any usages of generic class name")
                 logo_svg_content = re.sub(r"(cls-\d+)", f"{tool_name_slug}-\\1", logo_svg_content)
 
+            id_search = re.findall(r'id="([^"]+)"', logo_svg_content)
+            href_search = re.findall(r'xlink:href="#([^"]+)"', logo_svg_content)
+
+            for id_match in id_search:
+                logging.debug(f"Found ID {id_match} in tool SVG: {tool_label}")
+                logo_svg_content = re.sub(f'id="{id_match}"', f'id="{tool_name_slug}-{id_match}"', logo_svg_content)
+
+            for href_match in href_search:
+                logging.debug(f"Found href #{href_match} in tool SVG: {tool_label}")
+                logo_svg_content = re.sub(f'xlink:href="#{href_match}"', f'xlink:href="#{tool_name_slug}-{href_match}"', logo_svg_content)
+
+            css_url_search = re.findall(r"url\(#([^)]+)\)", logo_svg_content)
+            for css_url_match in css_url_search:
+                logging.debug(f"Found CSS URL reference #{css_url_match} in tool SVG: {tool_label}")
+                logo_svg_content = re.sub(f"url\(#{css_url_match}\)", f"url(#{tool_name_slug}-{css_url_match})", logo_svg_content)
+
             logo_svg_dom = xml.dom.minidom.parseString(logo_svg_content)
             logo_node = logo_svg_dom.documentElement
 
@@ -198,8 +214,10 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
             transform_y = float(cy) - (logo_scaled_height / 2) + logo_position_adjust_y
             logging.debug(f"Translating logo to the position ({transform_x}, {transform_y})")
             transform_attr = f"translate({transform_x}, {transform_y}) scale({logo_scale})"
-            logo_node.setAttribute("transform", transform_attr)
 
+            logo_node_id = f"{tool_name_slug}-logo"
+            logo_node.setAttribute("id", logo_node_id)
+            logo_node.setAttribute("transform", transform_attr)
             logo_node.setAttribute("width", str(logo_orig_width))
             logo_node.setAttribute("height", str(logo_orig_height))
 
@@ -249,5 +267,5 @@ def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logo
     )
 
     logging.info(f"Final diagram with embedded logos generated")
-    
+
     return output_svg_path
