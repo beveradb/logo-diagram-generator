@@ -9,5 +9,8 @@ WORKDIR /app
 # Install the logo-diagram-generator package
 RUN pip install logo-diagram-generator
 
-# Set the default command to run the logo-diagram-generator
-CMD ["logo-diagram-generator"]
+# Configure docker to run the logo-diagram-generator
+ENTRYPOINT ["logo-diagram-generator"]
+
+# Set the default args to pass if none are specified
+CMD [ "--help" ]

@@ -9,9 +9,8 @@ This package, `logo-diagram-generator`, allows you to generate SVG diagrams that
 
 Here's an example of a diagram generated using `logo-diagram-generator`, based on an example configuration:
 
-```
-pip install logo-diagram-generator
-logo-diagram-generator -c examples/full.example.yml -o examples -n full.example
+```bash
+docker run -it -v `pwd`:/app beveradb/logo-diagram-generator -c examples/full.example.yml
 ```
 
 ![Example Diagram](examples/full.example_logos.svg)
@@ -25,6 +24,12 @@ logo-diagram-generator -c examples/full.example.yml -o examples -n full.example
    ```bash
    pip install logo-diagram-generator
    ```
+
+   **🐳 Alternately, use Docker and skip to step 3! 🎉**
+   ```bash
+   docker run -it -v `pwd`:/app beveradb/logo-diagram-generator
+   ```
+   If you use Docker, you don't need to install anything on your system as the tool runs in a container.
 
 2. **Install Graphviz**
 
