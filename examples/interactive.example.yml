@@ -1,0 +1,48 @@
+ecosystem:
+  centralTool:
+    name: Kubernetes
+    margin: 1
+    scale: 3
+  groups:
+    - category: Cluster Management
+      tools:
+        - name: Rancher
+    - category: Cloud Integration
+      tools:
+        - name: AWS
+    - category: Continuous Deployment
+      tools:
+        - name: Helm
+        - name: ArgoCD
+    - category: Observability
+      tools:
+        - name: Grafana
+        - name: Loki
+        - name: Tempo
+        - name: Prometheus
+    - category: Networking
+      tools:
+        - name: Istio
+        - name: CoreDNS
+        - name: Cilium
+    - category: Security & Compliance
+      tools:
+        - name: Vault
+        - name: OPA
+    - category: Developer Enablement
+      tools:
+        - name: Backstage
+  style:
+    defaultLogoScale: 1.5
+    diagramEngine: neato
+    diagramOverlap: prism
+    diagramOverlapScaling: 4.5
+    diagramOverlapShrink: true
+    diagramPadding: 0.5
+    diagramRankdir: LR
+    groupLabelFontcolor: "#333333"
+    groupLabelFontname: Avenir Next, Helvetica
+    groupLabelFontsize: 25
+    groupLabelMargin: 0.2
+    groupLabelShape: box
+    groupLabelStyle: rounded

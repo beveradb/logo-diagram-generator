@@ -24,19 +24,23 @@ def update_config(config_filepath, tool_name, updates):
     :param tool_name: Name of the tool to update.
     :param updates: Dictionary of updates to apply.
     """
+    logging.debug(f"Updating config file {config_filepath} for tool {tool_name} with updates: {updates}")
+
     with open(config_filepath, "r") as file:
         config = yaml.safe_load(file)
 
     updated = False
-    if "centralTool" in config and config["centralTool"].get("name") == tool_name:
-        config["centralTool"].update(updates)
+    if "centralTool" in config["ecosystem"] and config["ecosystem"]["centralTool"].get("name") == tool_name:
+        config["ecosystem"]["centralTool"].update(updates)
         updated = True
+        logging.info(f"Successfully updated central tool in config file with new values: {updates}")
     else:
-        for category in config.get("ecosystem", []):
+        for category in config["ecosystem"]["groups"]:
             for tool in category.get("tools", []):
                 if tool.get("name") == tool_name:
                     tool.update(updates)
                     updated = True
+                    logging.info(f"Successfully updated tool {tool_name} in config file with new values: {updates}")
                     break
             if updated:
                 break
@@ -44,6 +48,9 @@ def update_config(config_filepath, tool_name, updates):
     if updated:
         with open(config_filepath, "w") as file:
             yaml.safe_dump(config, file)
+            logging.info(f"Successfully wrote updated YAML back to config file: {config_filepath}")
+    else:
+        logging.error(f"Failed to update config file for tool {tool_name} with updates: {updates}")
 
 
 def slugify(text):
