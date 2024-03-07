@@ -2,7 +2,7 @@
  --><!-- Title: %3 Pages: 1 --><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="356pt" height="535pt" viewBox="0.00 0.00 356.26 534.91">
 <g id="minimal.example" class="graph" transform="scale(1 1) rotate(0) translate(36 498.91)">
 <title>%3</title>
-<polygon fill="white" stroke="transparent" points="-36,36 -36,-498.91 320.26,-498.91 320.26,36 -36,36"/>
+<polygon fill="#ffffff" stroke="transparent" points="-36,36 -36,-498.91 320.26,-498.91 320.26,36 -36,36"/>
 <g id="cluster_cloud_integration" class="cluster">
 <title>cluster_cloud_integration</title>
 </g>

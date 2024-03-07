@@ -20,6 +20,7 @@ def generate_text_only_svg_diagram_from_config(config, diagram_name, output_svg_
     diagram_overlap_shrink = str(ecosystem_style.get("diagramOverlapShrink", "true"))
     diagram_padding = str(ecosystem_style.get("diagramPadding", "0.5"))
     diagram_rankdir = ecosystem_style.get("diagramRankdir", "TB")
+    diagram_background_color = ecosystem_style.get("diagramBackgroundColor", "#ffffff")
 
     group_label_shape = ecosystem_style.get("groupLabelShape", "box")
     group_label_style = ecosystem_style.get("groupLabelStyle", "rounded")
@@ -35,6 +36,16 @@ def generate_text_only_svg_diagram_from_config(config, diagram_name, output_svg_
     dot.attr(rankdir=diagram_rankdir)
     dot.attr(pad=diagram_padding)
     dot.attr(id=diagram_name)
+    dot.attr(bgcolor=diagram_background_color)
+
+    logging.info(
+        f"Diagram attributes set: engine={diagram_engine}, overlap={diagram_overlap}, "
+        f"overlap_scaling={diagram_overlap_scaling}, overlap_shrink={diagram_overlap_shrink}, "
+        f"rankdir={diagram_rankdir}, padding={diagram_padding}, background_color={diagram_background_color}, "
+        f"group_label_shape={group_label_shape}, group_label_style={group_label_style}, "
+        f"group_label_fontname={group_label_fontname}, group_label_fontcolor={group_label_fontcolor}, "
+        f"group_label_fontsize={group_label_fontsize}, group_label_margin={group_label_margin}"
+    )
 
     central_tool = config["ecosystem"]["centralTool"]
     central_tool_name = central_tool["name"]

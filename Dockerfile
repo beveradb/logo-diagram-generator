@@ -10,10 +10,11 @@ RUN fc-cache -fv
 # Set the working directory
 WORKDIR /app
 
-# Install the logo-diagram-generator package
-RUN pip install logo-diagram-generator
+# Install package globally with pip
+COPY . /app
+RUN pip install .
 
-# Configure docker to run the logo-diagram-generator
+# Configure docker to run the logo-diagram-generator command
 ENTRYPOINT ["logo-diagram-generator"]
 
 # Set the default args to pass if none are specified

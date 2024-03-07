@@ -1,5 +1,6 @@
 ecosystem:
   style:
+    diagramBackgroundColor: "#ffffff"
     diagramEngine: neato
     diagramOverlap: prism
     diagramOverlapScaling: 4
