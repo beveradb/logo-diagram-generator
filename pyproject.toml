@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "logo-diagram-generator"
-version = "0.1.2"
+version = "0.2.0"
 description = "Generate SVG diagrams of a (tech) ecosystem, using logos from each tool organised into groups around a central logo"
 authors = ["Andrew Beveridge <andrew@beveridge.uk>"]
 license = "MIT"
@@ -31,6 +31,7 @@ python = ">=3.9"
 requests = ">=2"
 graphviz = ">=0.20"
 pyyaml = "*"
+cairosvg = ">=2"
 
 [tool.poetry.scripts]
 logo-diagram-generator = 'logo_diagram_generator.cli:main'

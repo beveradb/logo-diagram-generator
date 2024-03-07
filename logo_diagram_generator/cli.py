@@ -12,7 +12,7 @@ def main():
     )
     parser.add_argument("-d", "--debug", action="store_true", help="enable debug logging, equivalent to --log_level=debug")
     parser.add_argument("--log_level", default="info", help="log level, e.g. info, debug, warning (default: %(default)s)")
-    
+
     parser.add_argument("-n", "--name", default="diagram", help="Base name for the output SVG files.")
     parser.add_argument("-c", "--config", default="config.yml", help="Path to the configuration file.")
     parser.add_argument("-l", "--logos_dir", default="logos", help="Directory where logos are stored.")
@@ -23,6 +23,7 @@ def main():
         default=os.getcwd(),
         help="Directory for the output SVG diagram.",
     )
+    parser.add_argument("-w", "--png_width", type=int, default=3000, help="Width of the resulting PNG image (default: 3000).")
 
     args = parser.parse_args()
 
@@ -31,7 +32,9 @@ def main():
     else:
         log_level = getattr(logging, args.log_level.upper())
 
-    logging.basicConfig(format="%(asctime)s.%(msecs)03d - %(levelname)s - %(module)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=log_level)
+    logging.basicConfig(
+        format="%(asctime)s.%(msecs)03d - %(levelname)s - %(module)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=log_level
+    )
 
     logging.info(f"Checking logos directory exists: {args.logos_dir}")
     utils.ensure_directory_exists(args.logos_dir)
@@ -41,11 +44,11 @@ def main():
         download_logos.download_all_logos(config_filepath=args.config, logos_dir=args.logos_dir)
         logging.info(f"Downloaded all logos to directory: {args.logos_dir}")
 
-    output_svg_path = generate_diagram.generate_diagram_from_config(
-        config_filepath=args.config, diagram_name=args.name, output_dir=args.output_dir, logos_dir=args.logos_dir
+    output_svg_path, output_png_path = generate_diagram.generate_diagram_from_config(
+        config_filepath=args.config, diagram_name=args.name, output_dir=args.output_dir, logos_dir=args.logos_dir, png_width=args.png_width
     )
 
-    logging.info(f"Logo diagram generator completed successfully! Output filename: {output_svg_path}")
+    logging.info(f"Logo diagram generator completed successfully! Output filenames: {output_svg_path}, {output_png_path}")
 
 
 if __name__ == "__main__":

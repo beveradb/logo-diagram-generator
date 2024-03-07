@@ -4,6 +4,7 @@ import logging
 import shutil
 import xml.dom.minidom
 import graphviz
+import cairosvg
 
 from logo_diagram_generator import utils
 
@@ -233,7 +234,7 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
     logging.info("Logos embedded into diagram")
 
 
-def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logos_dir):
+def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logos_dir, png_width):
     logging.info(f"Reading configuration from file: {config_filepath}")
     config = utils.read_config(config_filepath)
 
@@ -263,6 +264,11 @@ def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logo
         logos_dir=logos_dir,
     )
 
+    # Convert SVG content to PNG
+    png_output_path = output_svg_path.replace(".svg", ".png")
+    cairosvg.svg2png(url=output_svg_path, write_to=png_output_path, output_width=png_width)
+    logging.info(f"PNG version of the diagram saved to {png_output_path}, with width set to {png_width} pixels")
+
     logging.info(f"Final diagram with embedded logos generated")
 
-    return output_svg_path
+    return output_svg_path, png_output_path
