@@ -106,7 +106,28 @@ This is particularly useful if you have a diagram which you want to keep mostly 
 logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --override 'style.diagramBackgroundColor=#333333' --override 'style.groupLabelFontcolor=#ffffff' --override 'style.colorPalette=aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,cornflower,peachpuff,forestgreen'
 ```
 
+### Dark / Light Theme
+
+A common challenge when generating these diagrams is making them work on different background colors.
+
+To help with this, as well as the `--override` parameter above, there is also a convenient `--theme` CLI parameter.
+
+There are two options, `dark` and `light`, which set the group label text color and line color palette, and add either a white or dark grey stroke around every path in every logo, to help those logos be visible on a light or dark background. Examples below:
+
+```bash
+logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --override 'style.diagramBackgroundColor=#111111' --theme dark
+```
 ![Dark Theme Example Diagram](examples/full.example.dark_logos.png)
+
+```bash
+logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.light --theme light
+```
+![Light Theme Example Diagram](examples/full.example.light_logos.png)
+
+**⚠️ Warning: ** This approach is not perfect - adding a stroke around paths in the logo SVGs sometimes makes them look awful or totally breaks them! 
+
+If you find a specific logo doesn't work with this, you can set `strokeWidth: 0` on that tool in the config to disable the stroke for it.
+
 
 ## Contributing
 

@@ -31,6 +31,13 @@ def main():
         action="append",
         help="Override specific configuration entries. Use format: key=value. This option can be used multiple times for multiple overrides.",
     )
+    parser.add_argument(
+        "-t",
+        "--theme",
+        choices=["dark", "light"],
+        default=None,
+        help="Theme for the diagram, either 'dark' or 'light' (default: %(default)s)",
+    )
 
     args = parser.parse_args()
 
@@ -50,6 +57,30 @@ def main():
         logging.info(f"Downloading all logos to directory: {args.logos_dir}")
         download_logos.download_all_logos(config_filepath=args.config, logos_dir=args.logos_dir)
         logging.info(f"Downloaded all logos to directory: {args.logos_dir}")
+
+    # args.override is e.g. [{'style.diagramBackgroundColor': '#111111'}]
+    theme_overrides = None
+    if args.theme == "dark":
+        theme_overrides = {
+            "style.groupLabelFontcolor": "#ffffff",
+            "style.colorPalette": "aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,cornflower,peachpuff,forestgreen",
+            "style.defaultLogoStrokeColor": "white",
+            "style.defaultLogoStrokeWidth": "0.5",
+        }
+    elif args.theme == "light":
+        theme_overrides = {
+            "style.groupLabelFontcolor": "#222222",
+            "style.colorPalette": "seagreen,maroon,midnightblue,olive,red,mediumblue,darksalmon,darkgreen,orange",
+            "style.defaultLogoStrokeColor": "#333333",
+            "style.defaultLogoStrokeWidth": "0.2",
+        }
+
+    if theme_overrides is not None:
+        overrides = args.override if args.override is not None else []
+        # Merge all dictionaries in the list into a single dictionary
+        combined_overrides = {k: v for d in overrides for k, v in d.items()}
+        combined_overrides.update(theme_overrides)
+        args.override = [combined_overrides]
 
     output_svg_path, output_png_path = generate_diagram.generate_diagram_from_config(
         config_filepath=args.config,

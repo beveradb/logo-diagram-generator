@@ -21,6 +21,7 @@ ecosystem:
     scale: 3
     margin: 1
     positionAdjustY: -20
+    strokeWidth: 2
   groups:
     - category: Cluster Management
       tools:
@@ -36,6 +37,7 @@ ecosystem:
         - alias: helmsh
           label: Helm
           name: Helm
+          strokeWidth: 4
         - alias: argoprojio
           label: Argo
           name: Argo CD
@@ -72,3 +74,4 @@ ecosystem:
         - label: Backstage
           name: Backstage
           svgURL: https://raw.githubusercontent.com/cncf/artwork/master/projects/backstage/horizontal/color/backstage-horizontal-color.svg
+          strokeWidth: 5

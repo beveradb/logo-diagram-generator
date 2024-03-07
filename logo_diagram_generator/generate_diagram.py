@@ -151,6 +151,9 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
     logging.info(f"Embedding logos into diagram from {diagram_svg_path}")
 
     default_logo_scale = config["ecosystem"].get("style", {}).get("defaultLogoScale", 1.5)
+    default_logo_stroke_color = config["ecosystem"].get("style", {}).get("defaultLogoStrokeColor", None)
+    default_logo_stroke_width = config["ecosystem"].get("style", {}).get("defaultLogoStrokeWidth", 0)
+
     with open(diagram_svg_path, "r") as file:
         diagram_svg = file.read()
 
@@ -170,6 +173,9 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
         logo_scale = tool_config.get("scale", default_logo_scale)
         logo_position_adjust_x = tool_config.get("positionAdjustX", 0)
         logo_position_adjust_y = tool_config.get("positionAdjustY", 0)
+
+        logo_stroke_color = tool_config.get("strokeColor", default_logo_stroke_color)
+        logo_stroke_width = tool_config.get("strokeWidth", default_logo_stroke_width)
 
         tool_name_slug = utils.slugify(tool_name)
         logo_svg_path = os.path.join(logos_dir, f"{tool_name_slug}.svg")
@@ -237,6 +243,16 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
             logo_node.setAttribute("transform", transform_attr)
             logo_node.setAttribute("width", str(logo_orig_width))
             logo_node.setAttribute("height", str(logo_orig_height))
+
+            if logo_stroke_color is not None and float(logo_stroke_width) > 0:
+                # List of SVG shape tags to add strokes to
+                shape_tags = ["path", "rect", "circle", "ellipse", "line", "polyline", "polygon"]
+
+                for tag in shape_tags:
+                    elements = logo_svg_dom.getElementsByTagName(tag)
+                    for element in elements:
+                        element.setAttribute("stroke", logo_stroke_color)
+                        element.setAttribute("stroke-width", str(logo_stroke_width))
 
             # Remove the tool node completely and insert the logo node at the end of the diagram documentElement
             tool_node.parentNode.removeChild(tool_node)
