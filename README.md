@@ -1,9 +1,9 @@
 # Logo Diagram Generator 🎨
 
-![PyPI - Version](https://img.shields.io/pypi/v/logo-diagram-generator)
-![PyPI - License](https://img.shields.io/pypi/l/logo-diagram-generator)
-![Docker Pulls](https://img.shields.io/docker/pulls/beveradb/logo-diagram-generator)
-![Docker Image Size](https://img.shields.io/docker/image-size/beveradb/logo-diagram-generator)
+[![PyPI - Version](https://img.shields.io/pypi/v/logo-diagram-generator)](https://pypi.org/project/logo-diagram-generator/)
+[![PyPI - License](https://img.shields.io/pypi/l/logo-diagram-generator)](https://github.com/beveradb/logo-diagram-generator/blob/main/LICENSE)
+[![Docker Pulls](https://img.shields.io/docker/pulls/beveradb/logo-diagram-generator)](https://hub.docker.com/r/beveradb/logo-diagram-generator)
+[![Docker Image Size](https://img.shields.io/docker/image-size/beveradb/logo-diagram-generator)](https://hub.docker.com/r/beveradb/logo-diagram-generator)
 
 This package, `logo-diagram-generator`, allows you to generate SVG diagrams that visually represent a technology ecosystem, including tool logos, based on a YAML configuration file. It's designed to help visualize the relationships and categories of tools within a technology stack, making it easier to understand at a glance.
 
