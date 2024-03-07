@@ -24,6 +24,13 @@ def main():
         help="Directory for the output SVG diagram.",
     )
     parser.add_argument("-w", "--png_width", type=int, default=3000, help="Width of the resulting PNG image (default: 3000).")
+    parser.add_argument(
+        "-oc",
+        "--override",
+        type=lambda kv: dict([kv.split("=")]),
+        action="append",
+        help="Override specific configuration entries. Use format: key=value. This option can be used multiple times for multiple overrides.",
+    )
 
     args = parser.parse_args()
 
@@ -45,7 +52,12 @@ def main():
         logging.info(f"Downloaded all logos to directory: {args.logos_dir}")
 
     output_svg_path, output_png_path = generate_diagram.generate_diagram_from_config(
-        config_filepath=args.config, diagram_name=args.name, output_dir=args.output_dir, logos_dir=args.logos_dir, png_width=args.png_width
+        config_filepath=args.config,
+        diagram_name=args.name,
+        output_dir=args.output_dir,
+        logos_dir=args.logos_dir,
+        png_width=args.png_width,
+        override_configs=args.override,
     )
 
     logging.info(f"Logo diagram generator completed successfully! Output filenames: {output_svg_path}, {output_png_path}")

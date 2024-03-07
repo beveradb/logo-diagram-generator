@@ -6,8 +6,8 @@
 <!-- Pages: 1 -->
 <svg width="1054pt" height="1008pt"
  viewBox="0.00 0.00 1054.32 1007.82" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="full.example" class="graph" transform="scale(1 1) rotate(0) translate(36 971.82)">
-<polygon fill="#ffffff" stroke="none" points="-36,36 -36,-971.82 1018.32,-971.82 1018.32,36 -36,36"/>
+<g id="full.example.dark" class="graph" transform="scale(1 1) rotate(0) translate(36 971.82)">
+<polygon fill="#333333" stroke="none" points="-36,36 -36,-971.82 1018.32,-971.82 1018.32,36 -36,36"/>
 <g id="cluster_cluster_management" class="cluster">
 <title>cluster_cluster_management</title>
 </g>
@@ -38,35 +38,35 @@
 <!-- label_cluster_management -->
 <g id="label_cluster_management" class="node">
 <title>label_cluster_management</title>
-<path fill="none" stroke="darkgreen" d="M769.27,-449.57C769.27,-449.57 651.34,-449.57 651.34,-449.57 645.34,-449.57 639.34,-443.57 639.34,-437.57 639.34,-437.57 639.34,-380.39 639.34,-380.39 639.34,-374.39 645.34,-368.39 651.34,-368.39 651.34,-368.39 769.27,-368.39 769.27,-368.39 775.27,-368.39 781.27,-374.39 781.27,-380.39 781.27,-380.39 781.27,-437.57 781.27,-437.57 781.27,-443.57 775.27,-449.57 769.27,-449.57"/>
-<text text-anchor="middle" x="710.3" y="-416.63" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Cluster</text>
-<text text-anchor="middle" x="710.3" y="-391.88" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Management</text>
+<path fill="none" stroke="aqua" d="M769.27,-449.57C769.27,-449.57 651.34,-449.57 651.34,-449.57 645.34,-449.57 639.34,-443.57 639.34,-437.57 639.34,-437.57 639.34,-380.39 639.34,-380.39 639.34,-374.39 645.34,-368.39 651.34,-368.39 651.34,-368.39 769.27,-368.39 769.27,-368.39 775.27,-368.39 781.27,-374.39 781.27,-380.39 781.27,-380.39 781.27,-437.57 781.27,-437.57 781.27,-443.57 775.27,-449.57 769.27,-449.57"/>
+<text text-anchor="middle" x="710.3" y="-416.63" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Cluster</text>
+<text text-anchor="middle" x="710.3" y="-391.88" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Management</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_cluster_management -->
 <g id="Kubernetes&#45;label_cluster_management&#45;edge" class="edge">
 <title>Kubernetes&#45;&gt;label_cluster_management</title>
-<path fill="none" stroke="darkgreen" d="M621.98,-435.56C627.77,-433.82 633.48,-432.1 639.03,-430.43"/>
-<polygon fill="darkgreen" stroke="darkgreen" points="639.03,-430.43 639.03,-430.43 639.03,-430.43 639.03,-430.43"/>
+<path fill="none" stroke="aqua" d="M621.98,-435.56C627.77,-433.82 633.48,-432.1 639.03,-430.43"/>
+<polygon fill="aqua" stroke="aqua" points="639.03,-430.43 639.03,-430.43 639.03,-430.43 639.03,-430.43"/>
 </g>
 <!-- label_cloud_integration -->
 <g id="label_cloud_integration" class="node">
 <title>label_cloud_integration</title>
-<path fill="none" stroke="darkblue" d="M580.01,-715.5C580.01,-715.5 481.58,-715.5 481.58,-715.5 475.58,-715.5 469.58,-709.5 469.58,-703.5 469.58,-703.5 469.58,-646.32 469.58,-646.32 469.58,-640.32 475.58,-634.32 481.58,-634.32 481.58,-634.32 580.01,-634.32 580.01,-634.32 586.01,-634.32 592.01,-640.32 592.01,-646.32 592.01,-646.32 592.01,-703.5 592.01,-703.5 592.01,-709.5 586.01,-715.5 580.01,-715.5"/>
-<text text-anchor="middle" x="530.79" y="-682.56" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Cloud</text>
-<text text-anchor="middle" x="530.79" y="-657.81" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Integration</text>
+<path fill="none" stroke="#7d26cd" d="M580.01,-715.5C580.01,-715.5 481.58,-715.5 481.58,-715.5 475.58,-715.5 469.58,-709.5 469.58,-703.5 469.58,-703.5 469.58,-646.32 469.58,-646.32 469.58,-640.32 475.58,-634.32 481.58,-634.32 481.58,-634.32 580.01,-634.32 580.01,-634.32 586.01,-634.32 592.01,-640.32 592.01,-646.32 592.01,-646.32 592.01,-703.5 592.01,-703.5 592.01,-709.5 586.01,-715.5 580.01,-715.5"/>
+<text text-anchor="middle" x="530.79" y="-682.56" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Cloud</text>
+<text text-anchor="middle" x="530.79" y="-657.81" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Integration</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_cloud_integration -->
 <g id="Kubernetes&#45;label_cloud_integration&#45;edge" class="edge">
 <title>Kubernetes&#45;&gt;label_cloud_integration</title>
-<path fill="none" stroke="darkblue" d="M511.28,-588.46C514.93,-604.63 518.48,-620.35 521.52,-633.84"/>
-<polygon fill="darkblue" stroke="darkblue" points="521.52,-633.84 521.52,-633.84 521.52,-633.84 521.52,-633.84"/>
+<path fill="none" stroke="#7d26cd" d="M511.28,-588.46C514.93,-604.63 518.48,-620.35 521.52,-633.84"/>
+<polygon fill="#7d26cd" stroke="#7d26cd" points="521.52,-633.84 521.52,-633.84 521.52,-633.84 521.52,-633.84"/>
 </g>
 <!-- label_continuous_deployment -->
 <g id="label_continuous_deployment" class="node">
 <title>label_continuous_deployment</title>
 <path fill="none" stroke="#cd2990" d="M320.62,-416.08C320.62,-416.08 210.19,-416.08 210.19,-416.08 204.19,-416.08 198.19,-410.08 198.19,-404.08 198.19,-404.08 198.19,-346.9 198.19,-346.9 198.19,-340.9 204.19,-334.9 210.19,-334.9 210.19,-334.9 320.62,-334.9 320.62,-334.9 326.62,-334.9 332.62,-340.9 332.62,-346.9 332.62,-346.9 332.62,-404.08 332.62,-404.08 332.62,-410.08 326.62,-416.08 320.62,-416.08"/>
-<text text-anchor="middle" x="265.41" y="-383.14" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Continuous</text>
-<text text-anchor="middle" x="265.41" y="-358.39" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Deployment</text>
+<text text-anchor="middle" x="265.41" y="-383.14" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Continuous</text>
+<text text-anchor="middle" x="265.41" y="-358.39" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Deployment</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_continuous_deployment -->
 <g id="Kubernetes&#45;label_continuous_deployment&#45;edge" class="edge">
@@ -77,33 +77,33 @@
 <!-- label_observability -->
 <g id="label_observability" class="node">
 <title>label_observability</title>
-<path fill="none" stroke="red" d="M590.79,-272.59C590.79,-272.59 472.86,-272.59 472.86,-272.59 466.86,-272.59 460.86,-266.59 460.86,-260.59 460.86,-260.59 460.86,-228.16 460.86,-228.16 460.86,-222.16 466.86,-216.16 472.86,-216.16 472.86,-216.16 590.79,-216.16 590.79,-216.16 596.79,-216.16 602.79,-222.16 602.79,-228.16 602.79,-228.16 602.79,-260.59 602.79,-260.59 602.79,-266.59 596.79,-272.59 590.79,-272.59"/>
-<text text-anchor="middle" x="531.83" y="-239.65" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Observability</text>
+<path fill="none" stroke="orangered" d="M590.79,-272.59C590.79,-272.59 472.86,-272.59 472.86,-272.59 466.86,-272.59 460.86,-266.59 460.86,-260.59 460.86,-260.59 460.86,-228.16 460.86,-228.16 460.86,-222.16 466.86,-216.16 472.86,-216.16 472.86,-216.16 590.79,-216.16 590.79,-216.16 596.79,-216.16 602.79,-222.16 602.79,-228.16 602.79,-228.16 602.79,-260.59 602.79,-260.59 602.79,-266.59 596.79,-272.59 590.79,-272.59"/>
+<text text-anchor="middle" x="531.83" y="-239.65" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Observability</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_observability -->
 <g id="Kubernetes&#45;label_observability&#45;edge" class="edge">
 <title>Kubernetes&#45;&gt;label_observability</title>
-<path fill="none" stroke="red" d="M508.25,-363.83C514.9,-330.11 521.64,-296 526.2,-272.91"/>
-<polygon fill="red" stroke="red" points="526.2,-272.91 526.2,-272.91 526.2,-272.91 526.2,-272.91"/>
+<path fill="none" stroke="orangered" d="M508.25,-363.83C514.9,-330.11 521.64,-296 526.2,-272.91"/>
+<polygon fill="orangered" stroke="orangered" points="526.2,-272.91 526.2,-272.91 526.2,-272.91 526.2,-272.91"/>
 </g>
 <!-- label_networking -->
 <g id="label_networking" class="node">
 <title>label_networking</title>
-<path fill="none" stroke="burlywood" d="M755.84,-633.97C755.84,-633.97 651.41,-633.97 651.41,-633.97 645.41,-633.97 639.41,-627.97 639.41,-621.97 639.41,-621.97 639.41,-589.54 639.41,-589.54 639.41,-583.54 645.41,-577.54 651.41,-577.54 651.41,-577.54 755.84,-577.54 755.84,-577.54 761.84,-577.54 767.84,-583.54 767.84,-589.54 767.84,-589.54 767.84,-621.97 767.84,-621.97 767.84,-627.97 761.84,-633.97 755.84,-633.97"/>
-<text text-anchor="middle" x="703.63" y="-601.03" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Networking</text>
+<path fill="none" stroke="yellow" d="M755.84,-633.97C755.84,-633.97 651.41,-633.97 651.41,-633.97 645.41,-633.97 639.41,-627.97 639.41,-621.97 639.41,-621.97 639.41,-589.54 639.41,-589.54 639.41,-583.54 645.41,-577.54 651.41,-577.54 651.41,-577.54 755.84,-577.54 755.84,-577.54 761.84,-577.54 767.84,-583.54 767.84,-589.54 767.84,-589.54 767.84,-621.97 767.84,-621.97 767.84,-627.97 761.84,-633.97 755.84,-633.97"/>
+<text text-anchor="middle" x="703.63" y="-601.03" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Networking</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_networking -->
 <g id="Kubernetes&#45;label_networking&#45;edge" class="edge">
 <title>Kubernetes&#45;&gt;label_networking</title>
-<path fill="none" stroke="burlywood" d="M601.83,-545.28C620.71,-556.5 639.3,-567.54 655.33,-577.06"/>
-<polygon fill="burlywood" stroke="burlywood" points="655.33,-577.06 655.33,-577.06 655.33,-577.06 655.33,-577.06"/>
+<path fill="none" stroke="yellow" d="M601.83,-545.28C620.71,-556.5 639.3,-567.54 655.33,-577.06"/>
+<polygon fill="yellow" stroke="yellow" points="655.33,-577.06 655.33,-577.06 655.33,-577.06 655.33,-577.06"/>
 </g>
 <!-- label_security__compliance -->
 <g id="label_security__compliance" class="node">
 <title>label_security__compliance</title>
 <path fill="none" stroke="lime" d="M448.92,-699.03C448.92,-699.03 324.24,-699.03 324.24,-699.03 318.24,-699.03 312.24,-693.03 312.24,-687.03 312.24,-687.03 312.24,-629.85 312.24,-629.85 312.24,-623.85 318.24,-617.85 324.24,-617.85 324.24,-617.85 448.92,-617.85 448.92,-617.85 454.92,-617.85 460.92,-623.85 460.92,-629.85 460.92,-629.85 460.92,-687.03 460.92,-687.03 460.92,-693.03 454.92,-699.03 448.92,-699.03"/>
-<text text-anchor="middle" x="386.58" y="-666.09" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Security</text>
-<text text-anchor="middle" x="386.58" y="-641.34" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">&amp; Compliance</text>
+<text text-anchor="middle" x="386.58" y="-666.09" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Security</text>
+<text text-anchor="middle" x="386.58" y="-641.34" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">&amp; Compliance</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_security__compliance -->
 <g id="Kubernetes&#45;label_security__compliance&#45;edge" class="edge">
@@ -114,39 +114,39 @@
 <!-- label_developer_enablement -->
 <g id="label_developer_enablement" class="node">
 <title>label_developer_enablement</title>
-<path fill="none" stroke="aqua" d="M320.67,-601.38C320.67,-601.38 213.24,-601.38 213.24,-601.38 207.24,-601.38 201.24,-595.38 201.24,-589.38 201.24,-589.38 201.24,-532.2 201.24,-532.2 201.24,-526.2 207.24,-520.2 213.24,-520.2 213.24,-520.2 320.67,-520.2 320.67,-520.2 326.67,-520.2 332.67,-526.2 332.67,-532.2 332.67,-532.2 332.67,-589.38 332.67,-589.38 332.67,-595.38 326.67,-601.38 320.67,-601.38"/>
-<text text-anchor="middle" x="266.95" y="-568.44" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Developer</text>
-<text text-anchor="middle" x="266.95" y="-543.69" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#333333">Enablement</text>
+<path fill="none" stroke="fuchsia" d="M320.67,-601.38C320.67,-601.38 213.24,-601.38 213.24,-601.38 207.24,-601.38 201.24,-595.38 201.24,-589.38 201.24,-589.38 201.24,-532.2 201.24,-532.2 201.24,-526.2 207.24,-520.2 213.24,-520.2 213.24,-520.2 320.67,-520.2 320.67,-520.2 326.67,-520.2 332.67,-526.2 332.67,-532.2 332.67,-532.2 332.67,-589.38 332.67,-589.38 332.67,-595.38 326.67,-601.38 320.67,-601.38"/>
+<text text-anchor="middle" x="266.95" y="-568.44" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Developer</text>
+<text text-anchor="middle" x="266.95" y="-543.69" font-family="Avenir Next, Helvetica" font-size="18.00" fill="#ffffff">Enablement</text>
 </g>
 <!-- Kubernetes&#45;&gt;label_developer_enablement -->
 <g id="Kubernetes&#45;label_developer_enablement&#45;edge" class="edge">
 <title>Kubernetes&#45;&gt;label_developer_enablement</title>
-<path fill="none" stroke="aqua" d="M355.42,-526.75C347.72,-529.71 340.17,-532.62 332.92,-535.41"/>
-<polygon fill="aqua" stroke="aqua" points="332.92,-535.41 332.92,-535.41 332.92,-535.41 332.92,-535.41"/>
+<path fill="none" stroke="fuchsia" d="M355.42,-526.75C347.72,-529.71 340.17,-532.62 332.92,-535.41"/>
+<polygon fill="fuchsia" stroke="fuchsia" points="332.92,-535.41 332.92,-535.41 332.92,-535.41 332.92,-535.41"/>
 </g>
 <!-- Rancher -->
 <g id="Rancher" class="node">
 <title>Rancher</title>
-<ellipse fill="none" stroke="darkgreen" cx="909.96" cy="-365.44" rx="62.37" ry="42.21"/>
+<ellipse fill="none" stroke="aqua" cx="909.96" cy="-365.44" rx="62.37" ry="42.21"/>
 <text text-anchor="middle" x="909.96" y="-360.39" font-family="Times,serif" font-size="14.00">Rancher</text>
 </g>
 <!-- label_cluster_management&#45;&gt;Rancher -->
 <g id="label_cluster_management&#45;Rancher&#45;edge" class="edge">
 <title>label_cluster_management&#45;&gt;Rancher</title>
-<path fill="none" stroke="darkgreen" d="M781.54,-393.44C800.27,-389.36 820.46,-384.96 839.17,-380.88"/>
-<polygon fill="darkgreen" stroke="darkgreen" points="839.79,-384.32 848.81,-378.77 838.29,-377.48 839.79,-384.32"/>
+<path fill="none" stroke="aqua" d="M781.54,-393.44C800.27,-389.36 820.46,-384.96 839.17,-380.88"/>
+<polygon fill="aqua" stroke="aqua" points="839.79,-384.32 848.81,-378.77 838.29,-377.48 839.79,-384.32"/>
 </g>
 <!-- AWS -->
 <g id="AWS" class="node">
 <title>AWS</title>
-<ellipse fill="none" stroke="darkblue" cx="549.83" cy="-893.61" rx="51.76" ry="42.21"/>
+<ellipse fill="none" stroke="#7d26cd" cx="549.83" cy="-893.61" rx="51.76" ry="42.21"/>
 <text text-anchor="middle" x="549.83" y="-888.56" font-family="Times,serif" font-size="14.00">AWS</text>
 </g>
 <!-- label_cloud_integration&#45;&gt;AWS -->
 <g id="label_cloud_integration&#45;AWS&#45;edge" class="edge">
 <title>label_cloud_integration&#45;&gt;AWS</title>
-<path fill="none" stroke="darkblue" d="M534.35,-715.79C537.4,-750.75 541.8,-801.32 545.13,-839.61"/>
-<polygon fill="darkblue" stroke="darkblue" points="541.64,-839.9 546,-849.56 548.62,-839.29 541.64,-839.9"/>
+<path fill="none" stroke="#7d26cd" d="M534.35,-715.79C537.4,-750.75 541.8,-801.32 545.13,-839.61"/>
+<polygon fill="#7d26cd" stroke="#7d26cd" points="541.64,-839.9 546,-849.56 548.62,-839.29 541.64,-839.9"/>
 </g>
 <!-- Helm -->
 <g id="Helm" class="node">
@@ -175,74 +175,74 @@
 <!-- Grafana -->
 <g id="Grafana" class="node">
 <title>Grafana</title>
-<ellipse fill="none" stroke="red" cx="632.97" cy="-65.07" rx="61.31" ry="42.21"/>
+<ellipse fill="none" stroke="orangered" cx="632.97" cy="-65.07" rx="61.31" ry="42.21"/>
 <text text-anchor="middle" x="632.97" y="-60.02" font-family="Times,serif" font-size="14.00">Grafana</text>
 </g>
 <!-- label_observability&#45;&gt;Grafana -->
 <g id="label_observability&#45;Grafana&#45;edge" class="edge">
 <title>label_observability&#45;&gt;Grafana</title>
-<path fill="none" stroke="red" d="M547.86,-215.97C563.2,-188.76 586.68,-147.14 605.09,-114.5"/>
-<polygon fill="red" stroke="red" points="608.02,-116.43 609.88,-106 601.92,-112.99 608.02,-116.43"/>
+<path fill="none" stroke="orangered" d="M547.86,-215.97C563.2,-188.76 586.68,-147.14 605.09,-114.5"/>
+<polygon fill="orangered" stroke="orangered" points="608.02,-116.43 609.88,-106 601.92,-112.99 608.02,-116.43"/>
 </g>
 <!-- Loki -->
 <g id="Loki" class="node">
 <title>Loki</title>
-<ellipse fill="none" stroke="red" cx="486.13" cy="-42.21" rx="48.58" ry="42.21"/>
+<ellipse fill="none" stroke="orangered" cx="486.13" cy="-42.21" rx="48.58" ry="42.21"/>
 <text text-anchor="middle" x="486.13" y="-37.16" font-family="Times,serif" font-size="14.00">Loki</text>
 </g>
 <!-- label_observability&#45;&gt;Loki -->
 <g id="label_observability&#45;Loki&#45;edge" class="edge">
 <title>label_observability&#45;&gt;Loki</title>
-<path fill="none" stroke="red" d="M525.38,-215.84C518.3,-184.54 506.79,-133.62 498.06,-94.99"/>
-<polygon fill="red" stroke="red" points="501.52,-94.4 495.9,-85.42 494.69,-95.95 501.52,-94.4"/>
+<path fill="none" stroke="orangered" d="M525.38,-215.84C518.3,-184.54 506.79,-133.62 498.06,-94.99"/>
+<polygon fill="orangered" stroke="orangered" points="501.52,-94.4 495.9,-85.42 494.69,-95.95 501.52,-94.4"/>
 </g>
 <!-- Tempo -->
 <g id="Tempo" class="node">
 <title>Tempo</title>
-<ellipse fill="none" stroke="red" cx="365.83" cy="-109.48" rx="58.12" ry="42.21"/>
+<ellipse fill="none" stroke="orangered" cx="365.83" cy="-109.48" rx="58.12" ry="42.21"/>
 <text text-anchor="middle" x="365.83" y="-104.43" font-family="Times,serif" font-size="14.00">Tempo</text>
 </g>
 <!-- label_observability&#45;&gt;Tempo -->
 <g id="label_observability&#45;Tempo&#45;edge" class="edge">
 <title>label_observability&#45;&gt;Tempo</title>
-<path fill="none" stroke="red" d="M496.62,-215.77C472.43,-196.11 440.01,-169.76 413.5,-148.22"/>
-<polygon fill="red" stroke="red" points="415.9,-145.66 405.93,-142.07 411.48,-151.09 415.9,-145.66"/>
+<path fill="none" stroke="orangered" d="M496.62,-215.77C472.43,-196.11 440.01,-169.76 413.5,-148.22"/>
+<polygon fill="orangered" stroke="orangered" points="415.9,-145.66 405.93,-142.07 411.48,-151.09 415.9,-145.66"/>
 </g>
 <!-- Prometheus -->
 <g id="Prometheus" class="node">
 <title>Prometheus</title>
-<ellipse fill="none" stroke="red" cx="734.11" cy="-163.8" rx="76.16" ry="42.21"/>
+<ellipse fill="none" stroke="orangered" cx="734.11" cy="-163.8" rx="76.16" ry="42.21"/>
 <text text-anchor="middle" x="734.11" y="-158.75" font-family="Times,serif" font-size="14.00">Prometheus</text>
 </g>
 <!-- label_observability&#45;&gt;Prometheus -->
 <g id="label_observability&#45;Prometheus&#45;edge" class="edge">
 <title>label_observability&#45;&gt;Prometheus</title>
-<path fill="none" stroke="red" d="M603.15,-215.97C621.97,-208.47 642.3,-200.37 661.2,-192.84"/>
-<polygon fill="red" stroke="red" points="662.44,-196.12 670.43,-189.17 659.85,-189.62 662.44,-196.12"/>
+<path fill="none" stroke="orangered" d="M603.15,-215.97C621.97,-208.47 642.3,-200.37 661.2,-192.84"/>
+<polygon fill="orangered" stroke="orangered" points="662.44,-196.12 670.43,-189.17 659.85,-189.62 662.44,-196.12"/>
 </g>
 <!-- Istio -->
 <g id="Istio" class="node">
 <title>Istio</title>
-<ellipse fill="none" stroke="burlywood" cx="800.5" cy="-782.88" rx="47.52" ry="42.21"/>
+<ellipse fill="none" stroke="yellow" cx="800.5" cy="-782.88" rx="47.52" ry="42.21"/>
 <text text-anchor="middle" x="800.5" y="-777.83" font-family="Times,serif" font-size="14.00">Istio</text>
 </g>
 <!-- label_networking&#45;&gt;Istio -->
 <g id="label_networking&#45;Istio&#45;edge" class="edge">
 <title>label_networking&#45;&gt;Istio</title>
-<path fill="none" stroke="burlywood" d="M719.19,-634.21C733.96,-661.21 756.45,-702.33 774.03,-734.48"/>
-<polygon fill="burlywood" stroke="burlywood" points="770.96,-736.16 778.83,-743.25 777.1,-732.8 770.96,-736.16"/>
+<path fill="none" stroke="yellow" d="M719.19,-634.21C733.96,-661.21 756.45,-702.33 774.03,-734.48"/>
+<polygon fill="yellow" stroke="yellow" points="770.96,-736.16 778.83,-743.25 777.1,-732.8 770.96,-736.16"/>
 </g>
 <!-- CoreDNS -->
 <g id="CoreDNS" class="node">
 <title>CoreDNS</title>
-<ellipse fill="none" stroke="burlywood" cx="914.12" cy="-612.07" rx="68.2" ry="42.21"/>
+<ellipse fill="none" stroke="yellow" cx="914.12" cy="-612.07" rx="68.2" ry="42.21"/>
 <text text-anchor="middle" x="914.12" y="-607.02" font-family="Times,serif" font-size="14.00">CoreDNS</text>
 </g>
 <!-- label_networking&#45;&gt;CoreDNS -->
 <g id="label_networking&#45;CoreDNS&#45;edge" class="edge">
 <title>label_networking&#45;&gt;CoreDNS</title>
-<path fill="none" stroke="burlywood" d="M768.21,-607.69C789.1,-608.32 812.52,-609.02 834.37,-609.68"/>
-<polygon fill="burlywood" stroke="burlywood" points="834.03,-613.17 844.13,-609.97 834.24,-606.17 834.03,-613.17"/>
+<path fill="none" stroke="yellow" d="M768.21,-607.69C789.1,-608.32 812.52,-609.02 834.37,-609.68"/>
+<polygon fill="yellow" stroke="yellow" points="834.03,-613.17 844.13,-609.97 834.24,-606.17 834.03,-613.17"/>
 </g>
 <!-- Vault -->
 <g id="Vault" class="node">
@@ -259,14 +259,14 @@
 <!-- Backstage -->
 <g id="Backstage" class="node">
 <title>Backstage</title>
-<ellipse fill="none" stroke="aqua" cx="89.52" cy="-654.82" rx="69.79" ry="42.21"/>
+<ellipse fill="none" stroke="fuchsia" cx="89.52" cy="-654.82" rx="69.79" ry="42.21"/>
 <text text-anchor="middle" x="89.52" y="-649.77" font-family="Times,serif" font-size="14.00">Backstage</text>
 </g>
 <!-- label_developer_enablement&#45;&gt;Backstage -->
 <g id="label_developer_enablement&#45;Backstage&#45;edge" class="edge">
 <title>label_developer_enablement&#45;&gt;Backstage</title>
-<path fill="none" stroke="aqua" d="M200.88,-595.81C185.04,-604.2 168.17,-613.14 152.47,-621.46"/>
-<polygon fill="aqua" stroke="aqua" points="150.88,-618.34 143.69,-626.12 154.16,-624.53 150.88,-618.34"/>
+<path fill="none" stroke="fuchsia" d="M200.88,-595.81C185.04,-604.2 168.17,-613.14 152.47,-621.46"/>
+<polygon fill="fuchsia" stroke="fuchsia" points="150.88,-618.34 143.69,-626.12 154.16,-624.53 150.88,-618.34"/>
 </g>
 </g>
 </svg>

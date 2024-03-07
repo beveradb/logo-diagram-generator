@@ -29,23 +29,31 @@ def generate_text_only_svg_diagram_from_config(config, diagram_name, output_svg_
     group_label_fontsize = str(ecosystem_style.get("groupLabelFontsize", "25"))
     group_label_margin = str(ecosystem_style.get("groupLabelMargin", "0.2"))
 
+    color_palette = ecosystem_style.get("colorPalette", utils.visually_distinct_colors)
+
     dot = graphviz.Digraph(engine=diagram_engine, format="svg")
+    dot.attr(id=diagram_name)
     dot.attr(overlap=diagram_overlap)
     dot.attr(overlap_scaling=diagram_overlap_scaling)
     dot.attr(overlap_shrink=diagram_overlap_shrink)
     dot.attr(rankdir=diagram_rankdir)
     dot.attr(pad=diagram_padding)
-    dot.attr(id=diagram_name)
     dot.attr(bgcolor=diagram_background_color)
 
     logging.info(
-        f"Diagram attributes set: engine={diagram_engine}, overlap={diagram_overlap}, "
+        f"Diagram level attributes set: id={diagram_name}, engine={diagram_engine}, overlap={diagram_overlap}, "
         f"overlap_scaling={diagram_overlap_scaling}, overlap_shrink={diagram_overlap_shrink}, "
         f"rankdir={diagram_rankdir}, padding={diagram_padding}, background_color={diagram_background_color}, "
-        f"group_label_shape={group_label_shape}, group_label_style={group_label_style}, "
+    )
+
+    logging.info(
+        f"Group attributes set: group_label_shape={group_label_shape}, group_label_style={group_label_style}, "
         f"group_label_fontname={group_label_fontname}, group_label_fontcolor={group_label_fontcolor}, "
         f"group_label_fontsize={group_label_fontsize}, group_label_margin={group_label_margin}"
     )
+
+    logging.info("Color palette for groups: ")
+    logging.info(color_palette)
 
     central_tool = config["ecosystem"]["centralTool"]
     central_tool_name = central_tool["name"]
@@ -64,7 +72,7 @@ def generate_text_only_svg_diagram_from_config(config, diagram_name, output_svg_
 
     for i, group in enumerate(config["ecosystem"]["groups"], start=0):
         group_slug = utils.slugify(group["category"])
-        group_color = group.get("color", utils.visually_distinct_colors[i % len(utils.visually_distinct_colors)])
+        group_color = group.get("color", color_palette[i % len(color_palette)])
         logging.debug(f"Processing group: {group['category']} with color {group_color}")
 
         group_label = group["category"]
@@ -208,7 +216,7 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
             css_url_search = re.findall(r"url\(#([^)]+)\)", logo_svg_content)
             for css_url_match in css_url_search:
                 logging.debug(f"Adding {tool_name_slug}- prefix to CSS URL reference #{css_url_match}")
-                logo_svg_content = re.sub(f"url\(#{css_url_match}\)", f"url(#{tool_name_slug}-{css_url_match})", logo_svg_content)
+                logo_svg_content = re.sub(r"url\(#([^)]+)\)", f"url(#{tool_name_slug}-{css_url_match})", logo_svg_content)
 
             logo_svg_dom = xml.dom.minidom.parseString(logo_svg_content)
             logo_node = logo_svg_dom.documentElement
@@ -245,9 +253,15 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
     logging.info("Logos embedded into diagram")
 
 
-def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logos_dir, png_width):
+def generate_diagram_from_config(config_filepath, diagram_name, output_dir, logos_dir, png_width, override_configs):
     logging.info(f"Reading configuration from file: {config_filepath}")
     config = utils.read_config(config_filepath)
+
+    if override_configs:
+        logging.info(f"Override configuration provided, replacing config keys as specified")
+        config["ecosystem"] = utils.override_config(config=config["ecosystem"], override_configs=override_configs)
+    else:
+        logging.info(f"No configuration overrides set, using values from specified config file")
 
     text_diagram_basename = utils.slugify(diagram_name)
     logging.info(f"Filesystem safe diagram name: {text_diagram_basename}")

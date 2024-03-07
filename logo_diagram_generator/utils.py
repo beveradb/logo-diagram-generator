@@ -17,6 +17,48 @@ visually_distinct_colors = [
 ]
 
 
+def override_config(config, override_configs):
+    """
+    Overrides the original configuration with values from the list of override configurations.
+    Supports overriding both scalar values and lists.
+    :param config: The original configuration dictionary.
+    :param override_configs: A list of override configuration dictionaries.
+    :return: The updated configuration dictionary.
+    """
+
+    def apply_override(config, key_path, value):
+        """
+        Recursively apply an override value based on a list of keys indicating the path.
+        Supports overriding lists by detecting a delimiter in the value.
+        :param config: The configuration dictionary to update.
+        :param key_path: The list of keys indicating the path to the value to override.
+        :param value: The override value.
+        """
+        key = key_path[0]
+        if len(key_path) == 1:
+            if "," in value and (key not in config or isinstance(config.get(key, ""), list)):
+                # If the value contains a comma and either the key isn't found in the config or the target is a list, 
+                # assume this config entry is supposed to be a list and split the value.
+                value = value.split(",")
+            if key in config:
+                logging.warning(f"Overriding value of key {key} from {config[key]} to {value}")
+            else:
+                logging.warning(f"Key {key} not found in the original config. Adding it with value: {value}")
+            config[key] = value
+        else:
+            if key not in config or not isinstance(config[key], dict):
+                logging.warning(f"Creating nested config for key {key} to accommodate override.")
+                config[key] = {}
+            apply_override(config[key], key_path[1:], value)
+
+    for override_config in override_configs:
+        for key, value in override_config.items():
+            key_path = key.split(".")
+            apply_override(config, key_path, value)
+
+    return config
+
+
 def update_config(config_filepath, tool_name, updates):
     """
     Updates the configuration file with the given updates for the specified tool.

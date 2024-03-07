@@ -96,6 +96,18 @@ docker run -it -v `pwd`:/app beveradb/logo-diagram-generator -c examples/full.ex
 - **Logo Download**: If the automatic logo download doesn't find a logo for a tool, you can specify the URL interactively or manually place an SVG file in the `logos` directory. The file name should match the tool's name in the configuration file, in lowercase.
 - **Diagram Appearance**: The appearance of the generated diagram can be customized by modifying the `config.yml` file. See the example configs and Graphviz documentation for more info.
 
+### Overriding Config
+
+You can override config entries in the config file from the command-line, using the `--override` parameter.
+
+This is particularly useful if you have a diagram which you want to keep mostly the same but generate multiple slightly different versions of, e.g. a dark themed version:
+
+```bash
+logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --override 'style.diagramBackgroundColor=#333333' --override 'style.groupLabelFontcolor=#ffffff' --override 'style.colorPalette=aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,cornflower,peachpuff,forestgreen'
+```
+
+![Dark Theme Example Diagram](examples/full.example.dark_logos.png)
+
 ## Contributing
 
 Contributions to improve `logo-diagram-generator` or add new features are welcome. Please submit a pull request or open an issue to discuss your ideas.
