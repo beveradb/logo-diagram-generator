@@ -2,7 +2,7 @@ ecosystem:
   style:
     diagramEngine: neato
     diagramOverlap: prism
-    diagramOverlapScaling: 4.5
+    diagramOverlapScaling: 4
     diagramOverlapShrink: true
     diagramPadding: 0.5
     diagramRankdir: LR
@@ -10,8 +10,8 @@ ecosystem:
     groupLabelStyle: rounded
     groupLabelFontname: Avenir Next, Helvetica
     groupLabelFontcolor: "#333333"
-    groupLabelFontsize: 25
-    groupLabelMargin: 0.3
+    groupLabelFontsize: 18
+    groupLabelMargin: 0.22
     defaultLogoScale: 1.5
   centralTool:
     label: Kubernetes
