@@ -9,13 +9,14 @@ This package, `logo-diagram-generator`, allows you to generate SVG diagrams that
 
 ## Example Output
 
-Here's an example of a diagram generated using `logo-diagram-generator`, based on an example configuration:
+Here's an example of a diagram generated using `logo-diagram-generator`
 
+This is the command used to render it, using one of the example configurations:
 ```bash
-docker run -it -v `pwd`:/app beveradb/logo-diagram-generator -c examples/full.example.yml
+docker run -it -v `pwd`:/app beveradb/logo-diagram-generator -c examples/full.example.yml -o examples -n full.example
 ```
 
-![Example Diagram](examples/full.example_logos.svg)
+![Example Diagram](examples/full.example_logos.png)
 
 ## Quick Start
 

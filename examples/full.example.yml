@@ -11,7 +11,7 @@ ecosystem:
     groupLabelFontname: Avenir Next, Helvetica
     groupLabelFontcolor: "#333333"
     groupLabelFontsize: 25
-    groupLabelMargin: 0.2
+    groupLabelMargin: 0.3
     defaultLogoScale: 1.5
   centralTool:
     label: Kubernetes

@@ -2,7 +2,7 @@ ecosystem:
   style:
     groupLabelFontname: Avenir Next, Helvetica
     groupLabelFontsize: 10
-    groupLabelMargin: 0.1
+    groupLabelMargin: 0.2
     defaultLogoScale: 1
     diagramOverlapScaling: 1.3
     diagramOverlapShrink: False
