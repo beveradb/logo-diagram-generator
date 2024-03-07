@@ -103,7 +103,7 @@ You can override config entries in the config file from the command-line, using 
 This is particularly useful if you have a diagram which you want to keep mostly the same but generate multiple slightly different versions of, e.g. a dark themed version:
 
 ```bash
-logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --override 'style.diagramBackgroundColor=#333333' --override 'style.groupLabelFontcolor=#ffffff' --override 'style.colorPalette=aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,cornflower,peachpuff,forestgreen'
+logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --override 'style.diagramBackgroundColor=#333333' --override 'style.groupLabelFontcolor=#ffffff' --override 'style.colorPalette=aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,#6495ed,peachpuff,forestgreen'
 ```
 
 ### Dark / Light Theme

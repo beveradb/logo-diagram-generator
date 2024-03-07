@@ -63,7 +63,7 @@ def main():
     if args.theme == "dark":
         theme_overrides = {
             "style.groupLabelFontcolor": "#ffffff",
-            "style.colorPalette": "aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,cornflower,peachpuff,forestgreen",
+            "style.colorPalette": "aqua,purple3,maroon3,orangered,yellow,lime,fuchsia,#6495ed,peachpuff,forestgreen",
             "style.defaultLogoStrokeColor": "white",
             "style.defaultLogoStrokeWidth": "0.5",
         }

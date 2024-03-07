@@ -4,6 +4,7 @@ config.yml
 # Functional outputs
 logos/
 /*.svg
+/*.png
 
 # Misc clutter
 .DS_Store
