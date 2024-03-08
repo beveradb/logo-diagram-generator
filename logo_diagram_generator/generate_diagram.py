@@ -249,10 +249,9 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
             logo_node.setAttribute("width", str(logo_orig_width))
             logo_node.setAttribute("height", str(logo_orig_height))
 
-            # Append the logo_node to the newly created <g> element
-            logo_parent_g_element.appendChild(logo_node)
-
             if logo_stroke_color is not None and float(logo_stroke_width) > 0:
+                logging.debug(f"Adding stroke to logo with color {logo_stroke_color} and width {logo_stroke_width}")
+                
                 # List of SVG shape tags to add strokes to
                 shape_tags = ["path", "rect", "circle", "ellipse", "line", "polyline", "polygon"]
 
@@ -261,6 +260,9 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
                     for element in elements:
                         element.setAttribute("stroke", logo_stroke_color)
                         element.setAttribute("stroke-width", str(logo_stroke_width))
+
+            # Append the logo_node to the newly created <g> element
+            logo_parent_g_element.appendChild(logo_node)
 
             # Remove the tool node completely and insert the logo node at the end of the diagram documentElement
             tool_node.parentNode.removeChild(tool_node)

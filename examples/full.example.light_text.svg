@@ -7,6 +7,12 @@
 <svg width="1083pt" height="1037pt"
  viewBox="0.00 0.00 1083.12 1036.62" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="full.example.light" class="graph" transform="scale(1 1) rotate(0) translate(50.4 986.22)">
+<g id="cluster_observability" class="cluster">
+<title>cluster_observability</title>
+</g>
+<g id="cluster_networking" class="cluster">
+<title>cluster_networking</title>
+</g>
 <g id="cluster_cluster_management" class="cluster">
 <title>cluster_cluster_management</title>
 </g>
@@ -21,12 +27,6 @@
 </g>
 <g id="cluster_developer_enablement" class="cluster">
 <title>cluster_developer_enablement</title>
-</g>
-<g id="cluster_observability" class="cluster">
-<title>cluster_observability</title>
-</g>
-<g id="cluster_networking" class="cluster">
-<title>cluster_networking</title>
 </g>
 <!-- Kubernetes -->
 <g id="Kubernetes" class="node">
