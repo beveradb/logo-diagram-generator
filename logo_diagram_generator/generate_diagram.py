@@ -222,7 +222,7 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
             css_url_search = re.findall(r"url\(#([^)]+)\)", logo_svg_content)
             for css_url_match in css_url_search:
                 logging.debug(f"Adding {tool_name_slug}- prefix to CSS URL reference #{css_url_match}")
-                logo_svg_content = re.sub(r"url\(#([^)]+)\)", f"url(#{tool_name_slug}-{css_url_match})", logo_svg_content)
+                logo_svg_content = re.sub(f"url\(#{css_url_match}\)", f"url(#{tool_name_slug}-{css_url_match})", logo_svg_content)
 
             logo_svg_dom = xml.dom.minidom.parseString(logo_svg_content)
             logo_node = logo_svg_dom.documentElement
