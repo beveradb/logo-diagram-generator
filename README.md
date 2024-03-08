@@ -15,8 +15,7 @@ This is the command used to render it, using one of the example configurations:
 ```bash
 docker run -it -v `pwd`:/app beveradb/logo-diagram-generator -c examples/full.example.yml -o examples -n full.example
 ```
-
-![Example Diagram](examples/full.example_logos.png)
+![Example Diagram](examples/full.example_logos.png#gh-light-mode-only)![Example Diagram](examples/full.example.dark_logos.png#gh-dark-mode-only)
 
 ## Quick Start
 
@@ -112,10 +111,10 @@ A common challenge when generating these diagrams is making them work on differe
 
 To help with this, as well as the `--override` parameter above, there is also a convenient `--theme` CLI parameter.
 
-There are two options, `dark` and `light`, which set the group label text color and line color palette, and add either a white or dark grey stroke around every path in every logo, to help those logos be visible on a light or dark background. Examples below:
+There are two options, `dark` and `light`, which set the group label text color and line color palette, and **add a white or dark grey stroke around every path in every logo**, to help those logos be visible on a light or dark background. Examples below:
 
 ```bash
-logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --override 'style.diagramBackgroundColor=#111111' --theme dark
+logo-diagram-generator -c examples/full.example.yml -o examples -n full.example.dark --theme dark
 ```
 ![Dark Theme Example Diagram](examples/full.example.dark_logos.png)
 
