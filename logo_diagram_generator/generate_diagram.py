@@ -238,11 +238,19 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
             logging.debug(f"Translating logo to the position ({transform_x}, {transform_y})")
             transform_attr = f"translate({transform_x}, {transform_y}) scale({logo_scale})"
 
+            # Create a new <g> element for grouping and applying the transform
+            logo_parent_g_element_id = f"{tool_name_slug}-logo-parent"
+            logo_parent_g_element = diagram_svg_dom.createElement("g")
+            logo_parent_g_element.setAttribute("id", logo_parent_g_element_id)
+            logo_parent_g_element.setAttribute("transform", transform_attr)
+
             logo_node_id = f"{tool_name_slug}-logo"
             logo_node.setAttribute("id", logo_node_id)
-            logo_node.setAttribute("transform", transform_attr)
             logo_node.setAttribute("width", str(logo_orig_width))
             logo_node.setAttribute("height", str(logo_orig_height))
+
+            # Append the logo_node to the newly created <g> element
+            logo_parent_g_element.appendChild(logo_node)
 
             if logo_stroke_color is not None and float(logo_stroke_width) > 0:
                 # List of SVG shape tags to add strokes to
@@ -256,7 +264,7 @@ def embed_logos_in_diagram(diagram_name, diagram_svg_path, output_svg_path, conf
 
             # Remove the tool node completely and insert the logo node at the end of the diagram documentElement
             tool_node.parentNode.removeChild(tool_node)
-            diagram_graph_node.appendChild(logo_node)
+            diagram_graph_node.appendChild(logo_parent_g_element)
 
             # Update the diagram SVG with the modified DOM
             diagram_svg = diagram_svg_dom.toxml()
